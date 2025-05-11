@@ -40,7 +40,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap:10px;
+  gap:20px;
   justify-content: center;
   /* height:100vh;
   width:50vh; */
@@ -48,11 +48,12 @@
   top:6vw;
 }
 .login-modal {
-  height:32vh;
-  width: 18vw;
+  height:39vh;
+  width: 17vw;
   border-radius: 5px;
   border:1px solid grey;
-  padding:15px;
+  padding:17px;
+  overflow: auto;
 } 
 .btn-grps {
   display: flex;
@@ -76,8 +77,18 @@
   right:16px;
 }
 .new-user-check {
-  position: absolute;
-  top:1px;
-  right:44px;
+  position: relative;
+  top:-6px;
+  right:10px;
   cursor: pointer;
+}
+.signup-btn {
+  position: relative;
+  left: 13px;
+  top: 2vw;
+  width: 14vw;
+  background-color: transparent !important;
+  color: black !important;
+  font-weight: 600 !important;
+  border: 1px solid grey !important;
 }

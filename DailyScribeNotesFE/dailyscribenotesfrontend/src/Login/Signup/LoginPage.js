@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form , Modal } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 
@@ -8,6 +8,7 @@ function LoginPage() {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [isNewUser, setIsNewUser] = useState(false);
+    const [showSignupModal, setShowSignupModal] = useState(false);
 
     const handleNewUser = () => {
         setIsNewUser(!isNewUser);
@@ -47,6 +48,14 @@ function LoginPage() {
         setUserName("");
     }
 
+    const handleSignup = () => {
+        setShowSignupModal(true);
+    }
+
+    const handleClose = () => {
+        setShowSignupModal(false);
+    }
+
     return (
         <div className="login-page">
             <h1>Login / Signup</h1>
@@ -56,7 +65,7 @@ function LoginPage() {
                     <Form.Control
                         type="text"
                         value={userName}
-                        placeholder="Enter The Username"
+                        placeholder="Enter the username"
                         onChange={handleUserName}
                         style={{ width: '15vw' }}
                     />
@@ -65,6 +74,7 @@ function LoginPage() {
                         type="password"
                         style={{ width: '15vw' }}
                         value={password}
+                        placeholder="Enter the password"
                         onChange={handlePassword}
                     />
                     <div className="btn-grps">
@@ -72,16 +82,22 @@ function LoginPage() {
                         <Button onClick={handleReset}>Reset</Button>
                     </div>
                     <div className="signup-validation">
-                        <p><b>Don't have an account ? </b></p>
+                        <p><b>New User ? </b></p>
                         <Form.Check
                             checked={isNewUser}
                             onChange={handleNewUser}
                             className="new-user-check"
                         />
                     </div>
+                    {isNewUser ? 
+                    <Button className="signup-btn" onClick={handleSignup}>Signup</Button> : <Button className="signup-btn" disabled onClick={handleSignup}>Signup</Button> 
+                }
                 </Form>
 
-
+                <Modal
+                show={showSignupModal}
+                onHide={handleClose}
+                />
             </div>
         </div>
     )
