@@ -56,6 +56,7 @@ function LoginPage() {
                     <Form.Control
                         type="text"
                         value={userName}
+                        placeholder="Enter The Username"
                         onChange={handleUserName}
                         style={{ width: '15vw' }}
                     />
