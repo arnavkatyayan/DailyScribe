@@ -8,8 +8,7 @@ function LoginPage() {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [isNewUser, setIsNewUser] = useState(false);
-    const [showSignupModal, setShowSignupModal] = useState(false);
-
+    const [showSignupModal, setShowSignupModal] = useState(false);  
     const handleNewUser = () => {
         setIsNewUser(!isNewUser);
     }
