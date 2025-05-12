@@ -90,7 +90,7 @@ function LoginPage() {
                         />
                     </div>
                     {isNewUser ? 
-                    <Button className="signup-btn" onClick={handleSignup}>Signup</Button> : <Button className="signup-btn" disabled onClick={handleSignup}>Signup</Button> 
+                    <Button className="signup-btn" onClick={handleSignup}>Sign up</Button> : <Button className="signup-btn" disabled onClick={handleSignup}>Signup</Button> 
                 }
                 </Form>
 
