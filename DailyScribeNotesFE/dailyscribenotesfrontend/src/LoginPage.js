@@ -3,12 +3,15 @@ import { useState } from "react";
 import { Button, Form , Modal } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
+import SignupPage from "./ReusableModalsAndMethods";
+import Swal from "sweetalert2";
 
 function LoginPage() {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [isNewUser, setIsNewUser] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);  
+    
     const handleNewUser = () => {
         setIsNewUser(!isNewUser);
     }
@@ -30,9 +33,20 @@ function LoginPage() {
         try {
             const response = await axios.post("http://localhost:9090/dailyScribe-login/login", loginBody);
             if (response.data === true) {
-                console.log("Login Succesful");
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Login Successful.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                  });
             }
             else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Credentials are wrong.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                  });
                 console.log("Login Failed");
             }
         }
@@ -93,9 +107,11 @@ function LoginPage() {
                 }
                 </Form>
 
-                <Modal
+                <SignupPage
                 show={showSignupModal}
-                onHide={handleClose}
+                onClose={handleClose}
+                title="Sign-Up Page"
+            
                 />
             </div>
         </div>

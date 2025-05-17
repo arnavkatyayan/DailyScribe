@@ -123,3 +123,11 @@
   font-size: large;
   font-weight: 700;
 }
+.signup-modal {
+  position: relative;
+  right: -62px;
+  top:-2px;
+}
+/* .signup-modal-body {
+  height:21vh !important;
+} */
