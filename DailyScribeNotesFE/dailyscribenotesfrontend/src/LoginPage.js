@@ -11,6 +11,10 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const [isNewUser, setIsNewUser] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);  
+    const [userNameSU, setUserNameSU] = useState("");
+    const [passwordSU, setPasswordSU] = useState("");
+    const [emailSU, setEmailSU] = useState("");
+    const [confirmPasswordSU, setConfirmPasswordSU] = useState("");
     
     const handleNewUser = () => {
         setIsNewUser(!isNewUser);
@@ -20,11 +24,122 @@ function LoginPage() {
         setUserName(evt.target.value);
     }
 
+    const handleUserNameSU = (evt) => {
+        setUserNameSU(evt.target.value);
+      };
+      
+      const handlePasswordSU = (evt) => {
+        setPasswordSU(evt.target.value);
+      };
+      
+      const handleEmailSU = (evt) => {
+        setEmailSU(evt.target.value);
+      };
+      
+      const handleConfirmPasswordSU = (evt) => {
+        setConfirmPasswordSU(evt.target.value);
+      };
+
     const handlePassword = (evt) => {
         setPassword(evt.target.value);
     }
 
+    const isUserNameOrEmailTaken = async (username,email) => {
+
+        try {
+          const response = await axios.get("http://localhost:9090/dailyScribe-login/isUserOrMailPresent", {
+                params: { username, email }
+            });
+            return response.data;
+        }catch(error) {
+            console.log("Error",error);
+        }
+    }
+
+    const handleSignupSU = async () => {
+        if (!userNameSU.trim() || !emailSU.trim() || !passwordSU.trim() || !confirmPasswordSU.trim()) {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Missing Fields',
+              text: 'Please fill in all fields before submitting.',
+            });
+            return;
+          }
+        
+          if (passwordSU !== confirmPasswordSU) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Password Mismatch',
+              text: 'Password and Confirm Password do not match.',
+            });
+            return;
+          }
+          const data = await isUserNameOrEmailTaken(userNameSU,emailSU);
+          
+          if(data.isEmailPresent) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Email Taken',
+                text: 'Please change the email.',
+              });
+              return;
+          }
+          if(data.isUserNamePresent) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Username Taken',
+                text: 'Please change the username.',
+              });
+              return;
+          }
+          const signupBody = {
+              userName: userNameSU.trim(),
+              email: emailSU.trim(),
+              password: passwordSU.trim()
+          }
+
+          try {
+            const response = await axios.post("http://localhost:9090/dailyScribe-login/signup",signupBody);
+            if (response.data === true) {
+                Swal.fire({
+                  title: 'Success!',
+                  text: 'Signup Successful.',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then(() => {
+                  setShowSignupModal(false);
+                });
+              }
+            else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Signup Failed',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+          }
+          catch (error) {
+            console.log("Error saving the login details");
+          }
+    }
+
+    const handleResetSU = () => {
+        setUserNameSU("");
+        setPasswordSU("");
+        setEmailSU("");
+        setConfirmPasswordSU("");
+    }
+
     const handleLogin = async () => {
+        if (!userName.trim() || !password.trim()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Missing Fields',
+                text: 'Please enter both username and password.',
+            });
+            return;
+        }
         const loginBody = {
             userName: userName.trim(),
             password: password.trim()
@@ -108,10 +223,19 @@ function LoginPage() {
                 </Form>
 
                 <SignupPage
-                show={showSignupModal}
-                onClose={handleClose}
-                title="Sign-Up Page"
-            
+                    show={showSignupModal}
+                    onClose={handleClose}
+                    title="Sign-Up Page"
+                    userNameSU={userNameSU}
+                    passwordSU={passwordSU}
+                    emailSU={emailSU}
+                    confirmPasswordSU={confirmPasswordSU}
+                    handleUserNameSU={handleUserNameSU}
+                    handlePasswordSU={handlePasswordSU}
+                    handleEmailSU={handleEmailSU}
+                    handleConfirmPasswordSU={handleConfirmPasswordSU}
+                    handleSignup={handleSignupSU}
+                    handleReset={handleResetSU}
                 />
             </div>
         </div>

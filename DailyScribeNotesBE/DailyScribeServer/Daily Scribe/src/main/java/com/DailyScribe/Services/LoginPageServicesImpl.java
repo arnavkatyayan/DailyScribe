@@ -28,4 +28,24 @@ public class LoginPageServicesImpl implements LoginPageServices {
 		
 	}
 
+	@Override
+	public Boolean saveDetails(String userName, String password, String email) {
+		SignupEntity signupEntity = new SignupEntity();
+		signupEntity.setUsername(userName);
+		signupEntity.setEmail(email);
+		signupEntity.setPassword(password);
+		signupRepo.save(signupEntity);
+		return true;
+	}
+
+	@Override
+	public Boolean isUsernameTaken(String username) {
+		return signupRepo.existsByUsername(username);
+	}
+
+	@Override
+	public Boolean isEmailTaken(String email) {
+		return signupRepo.existsByEmail(email);
+	}
+
 }
