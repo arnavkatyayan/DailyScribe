@@ -3,10 +3,13 @@ import { useState } from "react";
 import { Button, Form , Modal } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-import SignupPage from "./ReusableModalsAndMethods";
+//import SignupPage from "./ReusableModalsAndMethods";
+import { SignupPage, ForgetPasswordPage } from "./ReusableModalsAndMethods";
 import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom';
 
-function LoginPage() {
+function LoginPage(props) {
+    const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [isNewUser, setIsNewUser] = useState(false);
@@ -15,7 +18,9 @@ function LoginPage() {
     const [passwordSU, setPasswordSU] = useState("");
     const [emailSU, setEmailSU] = useState("");
     const [confirmPasswordSU, setConfirmPasswordSU] = useState("");
-    
+    const [isForgetPass, setIsForgetPass] = useState(false);
+    const [showForgetPassModal, setShowForgetPassModal] = useState(false);
+
     const handleNewUser = () => {
         setIsNewUser(!isNewUser);
     }
@@ -154,6 +159,10 @@ function LoginPage() {
                     icon: 'success',
                     confirmButtonText: 'OK'
                   });
+                  props.setUsername(userName);
+                  props.setIsLoggedIn(true);
+                  sessionStorage.setItem("isLoggedIn", "true");
+                  navigate("/"); 
             }
             else {
                 Swal.fire({
@@ -180,8 +189,31 @@ function LoginPage() {
         setShowSignupModal(true);
     }
 
+    const handleForgetPassMain = () => {
+        setShowForgetPassModal(true);
+    }
+
+    const handleForgetPassAPI = async () => {
+        if (!userName.trim()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Missing username',
+                text: 'Please enter username.',
+            });
+            return;
+        }
+    }
+
     const handleClose = () => {
         setShowSignupModal(false);
+    }
+
+    const handleClosePass = () => {
+        setShowForgetPassModal(false);
+    }
+
+    const handleForgetPassword = () => {
+        setIsForgetPass(!isForgetPass);
     }
 
     return (
@@ -215,11 +247,27 @@ function LoginPage() {
                             checked={isNewUser}
                             onChange={handleNewUser}
                             className="new-user-check"
+                            disabled={isForgetPass}
+                        />
+                        
+                         <p><b>Forget Password ? </b></p>
+                        <Form.Check
+                            checked={isForgetPass}
+                            onChange={handleForgetPassword}
+                            className="new-user-check"
+                            disabled={isNewUser}
                         />
                     </div>
-                    {isNewUser ? 
-                    <Button className="signup-btn" onClick={handleSignup}>Sign up</Button> : <Button className="signup-btn" disabled onClick={handleSignup}>Sign up</Button> 
-                }
+                    <div className="login-page-btns">
+                    {isNewUser ?
+                        <Button className="signup-btn" onClick={handleSignup}>Sign up</Button> : <Button className="signup-btn" disabled onClick={handleSignup}>Sign up</Button>
+                    }
+                    {isForgetPass ?
+                        <Button className="signup-btn" onClick={handleForgetPassMain}>Forget Password</Button> : <Button className="signup-btn" disabled onClick={handleForgetPassMain}>Forget Password</Button>
+
+
+                    }
+                    </div>
                 </Form>
 
                 <SignupPage
@@ -237,6 +285,15 @@ function LoginPage() {
                     handleSignup={handleSignupSU}
                     handleReset={handleResetSU}
                 />
+                <ForgetPasswordPage
+                show={showForgetPassModal}
+                onClose={handleClosePass}
+                title="Forget Password"
+                userName={userName}
+                handleUsername={handleUserName}
+                handleForgetPassword={handleForgetPassAPI}
+                />
+
             </div>
         </div>
     )
