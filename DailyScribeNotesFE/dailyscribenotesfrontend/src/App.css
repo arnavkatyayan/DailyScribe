@@ -102,6 +102,10 @@
     text-align: center;
     color: aliceblue;
     padding: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
 }
 .footer-class {
   background-color: #282c34;
@@ -140,15 +144,15 @@
   justify-content: center;
   position: relative;
   top: 3vw;
+  transform: scale(0.1);
+  animation: zoomIn 1.5s ease-out forwards;
+  opacity: 0;
 }
 .homepage {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  transform: scale(0.1);
-  animation: zoomIn 1.5s ease-out forwards;
-  opacity: 0;
   gap:10px;
 }
 @keyframes zoomIn {
@@ -164,4 +168,18 @@
 .journal-box {
   height: 22vh;
   width: 21vw !important;
+}
+.navbar-css {
+  display: flex;
+  gap: 15px;
+}
+.nav-link {
+  color: white !important;
+  font-size: large !important;
+}
+.nav-link:hover {
+  text-decoration: underline !important;
+}
+.username {
+  font-weight: bolder;
 }

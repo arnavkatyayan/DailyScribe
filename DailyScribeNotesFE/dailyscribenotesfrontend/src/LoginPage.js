@@ -205,11 +205,11 @@ function LoginPage(props) {
     }
 
     const handleClose = () => {
-        setShowSignupModal(false);
+        props.setIsNewUser(false);
     }
 
     const handleClosePass = () => {
-        setShowForgetPassModal(false);
+        props.setIsForgetPass(false);
     }
 
     const handleForgetPassword = () => {
@@ -241,37 +241,11 @@ function LoginPage(props) {
                         <Button onClick={handleLogin}>Login</Button>
                         <Button onClick={handleReset}>Reset</Button>
                     </div>
-                    <div className="signup-validation">
-                        <p><b>New User ? </b></p>
-                        <Form.Check
-                            checked={isNewUser}
-                            onChange={handleNewUser}
-                            className="new-user-check"
-                            disabled={isForgetPass}
-                        />
-                        
-                         <p><b>Forget Password ? </b></p>
-                        <Form.Check
-                            checked={isForgetPass}
-                            onChange={handleForgetPassword}
-                            className="new-user-check"
-                            disabled={isNewUser}
-                        />
-                    </div>
-                    <div className="login-page-btns">
-                    {isNewUser ?
-                        <Button className="signup-btn" onClick={handleSignup}>Sign up</Button> : <Button className="signup-btn" disabled onClick={handleSignup}>Sign up</Button>
-                    }
-                    {isForgetPass ?
-                        <Button className="signup-btn" onClick={handleForgetPassMain}>Forget Password</Button> : <Button className="signup-btn" disabled onClick={handleForgetPassMain}>Forget Password</Button>
-
-
-                    }
-                    </div>
+                   
                 </Form>
 
                 <SignupPage
-                    show={showSignupModal}
+                    show={props.isNewUser}
                     onClose={handleClose}
                     title="Sign-Up Page"
                     userNameSU={userNameSU}
@@ -286,7 +260,7 @@ function LoginPage(props) {
                     handleReset={handleResetSU}
                 />
                 <ForgetPasswordPage
-                show={showForgetPassModal}
+                show={props.isForgetPass}
                 onClose={handleClosePass}
                 title="Forget Password"
                 userName={userName}

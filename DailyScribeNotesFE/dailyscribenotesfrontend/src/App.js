@@ -3,6 +3,7 @@ import LoginPage from './LoginPage';
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from './HomePage';
+import { Nav, Navbar } from 'react-bootstrap';
 
 
 function App() {
@@ -10,20 +11,44 @@ function App() {
     return sessionStorage.getItem("isLoggedIn") === "true";
   });
   const [userName, setUsername] = useState("");
-
+  const [isNewUser, setIsNewUser] = useState(false);
+  const [isForgetPass, setIsForgetPass] = useState(false);
   useEffect(() => {
     sessionStorage.setItem("isLoggedIn", isLoggedIn);
   }, [isLoggedIn]);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-   
-    }
+   }
 
+   const handleSignup = () => {
+    setIsNewUser(true);
+   }
+
+   const handleForgetPassword = () => {
+    setIsForgetPass(true);
+   } 
   return (
     <>
       <div className='header-class'>
         <h1>Daily Scribe</h1>
+        {isLoggedIn ? (
+          <Navbar className='navbar-css'>
+            <Nav>
+              <Nav.Link>Entries</Nav.Link>
+              <Nav.Link>Settings</Nav.Link>
+              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+            </Nav>
+          </Navbar>
+        ) : (
+          <Navbar className='navbar-css'>
+            <Nav>
+              <Nav.Link onClick={handleSignup}>Signup</Nav.Link>
+              <Nav.Link onClick={handleForgetPassword}>Forget Password</Nav.Link>
+              <Nav.Link>About</Nav.Link>
+            </Nav>
+          </Navbar>
+        )}
       </div>
 
       <Router>
@@ -36,7 +61,7 @@ function App() {
           />
           <Route
             path="/login"
-            element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUsername={setUsername}/>}
+            element={<LoginPage setIsLoggedIn={setIsLoggedIn} setIsForgetPass={setIsForgetPass} isForgetPass={isForgetPass} setUsername={setUsername} isNewUser={isNewUser} setIsNewUser={setIsNewUser}/>}
           />
         </Routes>
       </Router>
