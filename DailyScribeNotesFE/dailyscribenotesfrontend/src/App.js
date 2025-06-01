@@ -4,13 +4,15 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from './HomePage';
 import { Nav, Navbar } from 'react-bootstrap';
-
+import LogoDailyScribe from './LogoDailyScribe.png';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return sessionStorage.getItem("isLoggedIn") === "true";
   });
-  const [userName, setUsername] = useState("");
+  const [userName, setUsername] = useState(() => {
+  return sessionStorage.getItem("userName") || "";
+});
   const [isNewUser, setIsNewUser] = useState(false);
   const [isForgetPass, setIsForgetPass] = useState(false);
   useEffect(() => {
@@ -31,7 +33,10 @@ function App() {
   return (
     <>
       <div className='header-class'>
+        <div className='logo-name'>
+        <img src={LogoDailyScribe} className='logo'/>
         <h1>Daily Scribe</h1>
+        </div>
         {isLoggedIn ? (
           <Navbar className='navbar-css'>
             <Nav>

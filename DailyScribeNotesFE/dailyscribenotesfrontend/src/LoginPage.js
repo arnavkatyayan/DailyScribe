@@ -162,6 +162,7 @@ function LoginPage(props) {
                   props.setUsername(userName);
                   props.setIsLoggedIn(true);
                   sessionStorage.setItem("isLoggedIn", "true");
+                  sessionStorage.setItem("userName", userName);
                   navigate("/"); 
             }
             else {

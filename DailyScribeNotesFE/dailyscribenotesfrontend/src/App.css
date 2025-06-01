@@ -140,7 +140,7 @@
 .homepage-parent {
   align-items: center;
   display: flex;
-  gap: 10vw;
+  gap: 4vw;
   justify-content: center;
   position: relative;
   top: 3vw;
@@ -182,4 +182,35 @@
 }
 .username {
   font-weight: bolder;
+}
+.logo-name {
+  display: flex;
+  gap:11px
+}
+.logo {
+  height:55px;
+}
+.quick-stats {
+  height: 16vh;
+  width: 14vw;
+  border-radius: 5px;
+  border:1px solid lightgray;
+  padding:14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.rhs-css {
+  display: flex;
+  flex-direction: column;
+  gap:15px;
+  position: relative;
+  top: 35px;
+}
+.recently-added {
+  height:30vh !important;
+  cursor: pointer;
+}
+.form-css {
+  display: flex;
+  flex-direction: column;
+  gap:15px;
 }
