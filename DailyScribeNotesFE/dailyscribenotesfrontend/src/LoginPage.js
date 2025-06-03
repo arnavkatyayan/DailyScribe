@@ -64,9 +64,10 @@ function LoginPage(props) {
     const handleSignupSU = async () => {
         if (!userNameSU.trim() || !emailSU.trim() || !passwordSU.trim() || !confirmPasswordSU.trim()) {
             Swal.fire({
-              icon: 'warning',
-              title: 'Missing Fields',
-              text: 'Please fill in all fields before submitting.',
+                icon: 'warning',
+                title: 'Missing Fields',
+                text: 'Please fill in all fields before submitting.',
+                confirmButton: 'my-confirm-button'
             });
             return;
           }
@@ -76,6 +77,7 @@ function LoginPage(props) {
               icon: 'error',
               title: 'Password Mismatch',
               text: 'Password and Confirm Password do not match.',
+                confirmButton: 'my-confirm-button'
             });
             return;
           }
@@ -86,6 +88,7 @@ function LoginPage(props) {
                 icon: 'error',
                 title: 'Email Taken',
                 text: 'Please change the email.',
+                  confirmButton: 'my-confirm-button'
               });
               return;
           }
@@ -94,6 +97,7 @@ function LoginPage(props) {
                 icon: 'error',
                 title: 'Username Taken',
                 text: 'Please change the username.',
+                  confirmButton: 'my-confirm-button'
               });
               return;
           }
@@ -110,7 +114,8 @@ function LoginPage(props) {
                   title: 'Success!',
                   text: 'Signup Successful.',
                   icon: 'success',
-                  confirmButtonText: 'OK'
+                  confirmButtonText: 'OK',
+                    confirmButton: 'my-confirm-button'
                 }).then(() => {
                   setShowSignupModal(false);
                 });
@@ -119,7 +124,8 @@ function LoginPage(props) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Signup Failed',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                      confirmButton: 'my-confirm-button'
                 });
                 return;
             }
@@ -157,7 +163,8 @@ function LoginPage(props) {
                     title: 'Success!',
                     text: 'Login Successful.',
                     icon: 'success',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                    confirmButton: 'my-confirm-button'
                   });
                   props.setUsername(userName);
                   props.setIsLoggedIn(true);
@@ -170,7 +177,8 @@ function LoginPage(props) {
                     title: 'Error!',
                     text: 'Credentials are wrong.',
                     icon: 'error',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                    confirmButton: 'my-confirm-button'
                   });
                 console.log("Login Failed");
             }
