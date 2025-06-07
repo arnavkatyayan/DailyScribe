@@ -181,14 +181,15 @@ function LoginPage(props) {
                     icon: 'success',
                     confirmButtonText: 'OK',
                     customClass: {
-                    confirmButton: 'my-confirm-button'
+                        confirmButton: 'my-confirm-button'
                     }
-                  });
-                  props.setUsername(userName);
-                  props.setIsLoggedIn(true);
-                  sessionStorage.setItem("isLoggedIn", "true");
-                  sessionStorage.setItem("userName", userName);
-                  navigate("/"); 
+                }).then(() => {
+                    props.setUsername(userName);
+                    props.setIsLoggedIn(true);
+                    sessionStorage.setItem("isLoggedIn", "true");
+                    sessionStorage.setItem("userName", userName);
+                    navigate("/");
+                });
             }
             else {
                 Swal.fire({
