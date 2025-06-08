@@ -48,7 +48,7 @@
   top:6vw;
 }
 .login-modal {
-  height:41vh;
+  height:28vh;
   width: 17vw;
   border-radius: 5px;
   border:1px solid grey;
@@ -243,8 +243,32 @@
   height:55vh;
   width:25vw;
   border-radius: 5px;
-  border:1px solid lightgray;
+  border:2px solid lightgray;
   box-shadow: 0 20px 12px rgba(0, 0, 0, 0.1);
   overflow: auto;
   padding:30px;
+  position: relative;
 }
+.journal-icons-size {
+  height: 35px;
+  cursor: pointer;
+}
+.journal-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  position: absolute;
+  right: 0;
+  top: 19px;
+}
+.journal-position {
+  position: relative;
+}
+.no-journal-css {
+  top: 10vw;
+  right: 8vw;
+  position: absolute;
+  font-weight: 600;
+}
+ 

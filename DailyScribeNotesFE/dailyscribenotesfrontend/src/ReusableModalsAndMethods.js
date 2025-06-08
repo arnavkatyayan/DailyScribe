@@ -30,6 +30,10 @@ export const quotes = [
   "Every page turned is a step toward peace."
 ];
 
+export const getDate = (date) => {
+  return date.split("T")[0];
+}
+
 export const SignupPage = ({
   show,
   onClose,

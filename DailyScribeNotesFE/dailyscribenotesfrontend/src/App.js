@@ -62,7 +62,7 @@ function App() {
               <Nav>
                 <Nav.Link onClick={handleSignup}>Signup</Nav.Link>
                 <Nav.Link onClick={handleForgetPassword}>Forget Password</Nav.Link>
-                <Nav.Link>About</Nav.Link>
+                <Nav.Link>Restore Account</Nav.Link>
               </Nav>
             </Navbar>
           )}

@@ -4,6 +4,7 @@ import { quotes } from "./ReusableModalsAndMethods";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { getDate } from "./ReusableModalsAndMethods";
 
 function HomePage(props) {
     const [quote, setQuote] = useState("");
@@ -135,11 +136,6 @@ function HomePage(props) {
     const handleJournal = (evt) => {
         setJournal(evt.target.value)
     }
-
-    const getDate = (date) => {
-        return date.split("T")[0];
-    }
-
 
     return (
         <div className="homepage-parent">
