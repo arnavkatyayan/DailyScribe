@@ -171,13 +171,19 @@ function HomePage(props) {
                 </div>
                 <div className="quick-stats recently-added">
                     <h3>Recent Entries</h3>
-                    {recentEntries.map((entry) => (
-                        <div key={entry.id} className="entries">
-                            <h5 className="journals">{entry.title} ({getDate(entry.date)})</h5>
-                            <p className="journals">{entry.journal}</p>
-                            
-                        </div>
-                    ))}
+                    {recentEntries.length ? (
+                        recentEntries.map((entry) => (
+                            <div key={entry.id} className="entries">
+                                <h5 className="journals">
+                                    {entry.title} ({getDate(entry.date)})
+                                </h5>
+                                <p className="journals">{entry.journal}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="no-journal-css">No journals found.</p>
+                    )}
+
                 </div>
             </div>
         </div>

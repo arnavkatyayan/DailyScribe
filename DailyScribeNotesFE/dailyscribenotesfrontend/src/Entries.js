@@ -31,9 +31,6 @@ const filteredEntries = props.entries.filter((journal) =>
     journal.journal.toLowerCase().includes(search.toLowerCase())
 );
 
-useEffect (()=> {
-
-},[filteredEntries]);
 
 return (
     <div className="entries-page">

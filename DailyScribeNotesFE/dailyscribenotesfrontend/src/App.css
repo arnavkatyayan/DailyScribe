@@ -271,4 +271,47 @@
   position: absolute;
   font-weight: 600;
 }
+.settings-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top:7vw;
+  flex-direction: column;
+}
+.settings-box {
+  height: 30vh;
+  width:20vw;
+  border-radius: 5px;
+  border:2px solid lightgray;
+  box-shadow: 0 20px 12px rgba(0, 0, 0, 0.1);
+  padding:15px;
+  position: relative;
+}
+.settings-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:20px;
+}
+.btn.btn-primary {
+  background-color: #282c34;
+  border-color: #282c34;
+}
+.btn.btn-primary:hover{
+  background-color: #282c34;
+  border-color: #282c34;
+}
+.del-acc {
+  position: absolute;
+  right:7vw;
+}
+.setting-name {
+  position: absolute;
+  left:15px;
+}
+.setting-button {
+  position: relative;
+  left:7vw;
+}
  
