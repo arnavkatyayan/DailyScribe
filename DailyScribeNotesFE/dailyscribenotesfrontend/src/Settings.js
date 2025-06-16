@@ -7,7 +7,6 @@ import axios from "axios";
 
 function Settings(props) {
     const [isChangePasswordClicked, setIsChangePasswordClicked] = useState(false);
-    const [isJournalsPresent, setIsJournalsPresent] = useState(false);
     
     const settingsOptions = [
         { name: "Change Password", button: "Change" },
@@ -70,7 +69,6 @@ function Settings(props) {
     };
 
     const checkDisabled = (option) => {
-        console.log(props.entries.length);
         if(option === "Change") {
             return false;
         }
@@ -110,7 +108,7 @@ function Settings(props) {
             <hr style={{ border: '1px solid #ccc' }} />
                 </>
             )}
-            <Button className="del-acc">Delete account</Button>
+            <Button className="del-acc" title="Delete account">Delete account</Button>
             </div>
         </div>
     )
