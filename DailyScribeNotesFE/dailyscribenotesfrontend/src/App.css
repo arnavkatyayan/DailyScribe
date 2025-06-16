@@ -297,10 +297,24 @@
 .btn.btn-primary {
   background-color: #282c34;
   border-color: #282c34;
+  color: #fff;
 }
 .btn.btn-primary:hover{
   background-color: #282c34;
   border-color: #282c34;
+  color: #fff;
+}
+.btn.btn.btn-primary:disabled {
+  background-color: #282c34;
+  border-color: #282c34;
+}
+.btn.btn-primary:active,
+.btn.btn-primary:focus,
+.btn.btn-primary:active:focus {
+  background-color: #1a1e23;
+  border-color: #1a1e23;
+  box-shadow: none;
+  color: #fff;
 }
 .del-acc {
   position: absolute;

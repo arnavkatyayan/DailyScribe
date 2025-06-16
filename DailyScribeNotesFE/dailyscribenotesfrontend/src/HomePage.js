@@ -26,6 +26,7 @@ function HomePage(props) {
         try {
             const response = await axios.get("http://localhost:9090/dailyScribe-journal/getJournals", { params: { userName: props.userName } });
             props.setEntries(response.data);
+            sessionStorage.setItem("entries", JSON.stringify(response.data));
             if (response.data) {
                 prepareList(response.data);
 
