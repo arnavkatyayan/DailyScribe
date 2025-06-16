@@ -56,26 +56,45 @@ function Settings(props) {
         });
 
         if (result.isConfirmed) {
-            const response = await deleteJournalAPI();
-            if (response === true) {
-                await props.fetchEntries();
-                Swal.fire({
-                    title: 'Deleted!',
-                    text: 'Your journals have been deleted.',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'my-confirm-button'
+            const confirmation = await Swal.fire({
+                title: 'Type "DELETE" to confirm',
+                input: 'text',
+                inputPlaceholder: 'Type DELETE to confirm',
+                inputValidator: (value) => {
+                    if (value !== 'DELETE') {
+                        return 'You must type DELETE to confirm';
                     }
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Error deleting the journals.',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'my-confirm-button'
-                    }
-                });
+                    return null;
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#282c34',
+                cancelButtonColor: '#d33'
+            });
+
+            if (confirmation.isConfirmed && confirmation.value === 'DELETE') {
+                const response = await deleteJournalAPI();
+                if (response === true) {
+                    await props.fetchEntries();
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your journals have been deleted.',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'my-confirm-button'
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Error deleting the journals.',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'my-confirm-button'
+                        }
+                    });
+                }
             }
         }
     };
