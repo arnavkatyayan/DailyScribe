@@ -12,4 +12,5 @@ public interface JournalPageServices {
 
 	Boolean saveJournal(JournalRequest journalRequest);
 	List<JournalPageDTO> getJournals(String userName);
+	Boolean deleteJournals(String userName);
 }

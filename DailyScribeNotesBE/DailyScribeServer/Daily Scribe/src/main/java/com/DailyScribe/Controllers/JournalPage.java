@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,4 +58,18 @@ public class JournalPage {
 
 		}
 	}
+	@DeleteMapping("deleteJournals")
+	public ResponseEntity<Boolean> deleteJournals(@RequestParam String userName) {
+		
+		try {
+			Boolean delete = journalPageService.deleteJournals(userName);
+			return ResponseEntity.ok(delete);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+		}
+		
+	}
+	
 }

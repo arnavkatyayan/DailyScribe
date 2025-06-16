@@ -8,6 +8,7 @@ import LogoDailyScribe from './LogoDailyScribe.png';
 import Entries from './Entries';
 import Settings from './Settings';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -27,7 +28,19 @@ function App() {
   useEffect(() => {
     sessionStorage.setItem("isLoggedIn", isLoggedIn);
     sessionStorage.setItem("entries", JSON.stringify(entries));
-  }, [isLoggedIn]);
+    
+  }, [isLoggedIn, entries]);
+
+  const getEntriesMain = async () => {
+        try {
+            const response = await axios.get("http://localhost:9090/dailyScribe-journal/getJournals", { params: { userName: userName } });
+            setEntries(response.data);
+            sessionStorage.setItem("entries", JSON.stringify(response.data));
+        }
+        catch (error) {
+            console.log("Error fetching entries", error);
+        }
+    }
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -111,7 +124,7 @@ function App() {
             path="/settings"
             element={
               isLoggedIn ? (
-                <Settings userName={userName} entries={entries}/>
+                <Settings userName={userName} entries={entries} fetchEntries={getEntriesMain}/>
               ) : (
                 <Navigate to="/login" replace />
               )

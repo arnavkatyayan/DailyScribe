@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.DailyScribe.DTO.JournalPageDTO;
 import com.DailyScribe.Entity.JournalEntity;
@@ -42,6 +43,24 @@ public class JournalPageServicesImpl implements JournalPageServices{
 			journalDTOList.add(dto);
 		}
 		return journalDTOList;
+	}
+
+	@Override
+	@Transactional
+	public Boolean deleteJournals(String userName) {
+
+		try {
+			if (journalRepo.existsByUsername(userName)) {
+				journalRepo.deleteByUsername(userName);
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

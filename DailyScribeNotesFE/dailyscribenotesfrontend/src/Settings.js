@@ -31,19 +31,20 @@ function Settings(props) {
     };
 
     const deleteJournalAPI = async () => {
-    
+
         try {
-            const response = await axios.delete("http://localhost:9090/dailyScribe-journal/deleteJournals", {params:{userName:props.userName}})
+            const response = await axios.delete("http://localhost:9090/dailyScribe-journal/deleteJournals", { params: { userName: props.userName } })
             return response.data;
         }
-    catch(error) {
-        console.log("Error deleting the journal",error);
-    }
+        catch (error) {
+            console.log("Error deleting the journal", error);
+            return false;
+        }
     }
 
 
-    const deleteJournals = () => {
-        Swal.fire({
+    const deleteJournals = async () => {
+        const result = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
             icon: 'warning',
@@ -52,21 +53,33 @@ function Settings(props) {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteJournalAPI();
+        });
+
+        if (result.isConfirmed) {
+            const response = await deleteJournalAPI();
+            if (response === true) {
+                await props.fetchEntries();
                 Swal.fire({
                     title: 'Deleted!',
-                    text: 'Your journal has been deleted.',
+                    text: 'Your journals have been deleted.',
                     icon: 'success',
                     customClass: {
                         confirmButton: 'my-confirm-button'
                     }
                 });
-
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Error deleting the journals.',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'my-confirm-button'
+                    }
+                });
             }
-        });
+        }
     };
+
 
     const checkDisabled = (option) => {
         if(option === "Change") {
