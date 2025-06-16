@@ -9,6 +9,7 @@ import Entries from './Entries';
 import Settings from './Settings';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -42,8 +43,19 @@ function App() {
         }
     }
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#282c34',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Cancel'
+    });
+    if (result.isConfirmed) {
+      setIsLoggedIn(false);
+    }
   }
 
   const handleSignup = () => {
