@@ -18,7 +18,8 @@ public class LoginPageServicesImpl implements LoginPageServices {
 		SignupEntity signupVals = signupRepo.findByUsername(userName);
 		String user = signupVals.getUsername();
 		String pass = signupVals.getPassword();
-		if(userName.equals(user) && password.equals(pass)) {
+		Boolean isAvailable = signupVals.getStatus();
+		if(userName.equals(user) && password.equals(pass) && isAvailable) {
 			return true;
 		}
 		else {

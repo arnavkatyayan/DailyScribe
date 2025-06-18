@@ -7,14 +7,15 @@ public class JournalPageDTO {
     private String title;
     private String journal;
     private Timestamp date;
-
+    private Long Id;
     public JournalPageDTO() {
     }
 
-    public JournalPageDTO(String title, String journal, Timestamp date) {
+    public JournalPageDTO(String title, String journal, Timestamp date, Long Id) {
         this.title = title;
         this.journal = journal;
         this.date = date;
+        this.Id = Id;
     }
 
     public String getTitle() {
@@ -40,6 +41,16 @@ public class JournalPageDTO {
     public void setDate(Timestamp date) {
         this.date = date;
     }
+
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+    
+    
 
  
 }

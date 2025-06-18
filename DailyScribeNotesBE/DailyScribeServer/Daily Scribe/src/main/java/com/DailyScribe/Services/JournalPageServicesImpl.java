@@ -40,6 +40,7 @@ public class JournalPageServicesImpl implements JournalPageServices{
 			dto.setTitle(journal.getTitle());
 			dto.setJournal(journal.getJournal());
 			dto.setDate(journal.getDate());
+			dto.setId(journal.getId());
 			journalDTOList.add(dto);
 		}
 		return journalDTOList;
