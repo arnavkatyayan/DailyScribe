@@ -9,4 +9,5 @@ public interface LoginPageServices {
 	Boolean saveDetails(String userName, String password, String email);
 	Boolean isUsernameTaken(String username);
 	Boolean isEmailTaken(String email);
+	Boolean deleteAccount(String userName);
 }

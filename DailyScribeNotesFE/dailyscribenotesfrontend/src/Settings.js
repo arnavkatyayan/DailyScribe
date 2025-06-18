@@ -126,6 +126,74 @@ function Settings(props) {
         
     }
 
+    const deleteAccount = async () => {
+        try {
+            const response = await axios.delete("http://localhost:9090/dailyScribe-login/deleteAccount", { params: { userName: props.userName } })
+            return response.data;
+        }
+        catch (error) {
+            console.log("Error deleting the account", error);
+            return "Error Deleting Account!";
+        }
+    }
+
+    const deleteAlert = async () => {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#282c34',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        });
+
+        if (result.isConfirmed) {
+            const confirmation = await Swal.fire({
+                title: 'Type "DELETE_ACCOUNT" to confirm',
+                input: 'text',
+                inputPlaceholder: 'Type DELETE to confirm',
+                inputValidator: (value) => {
+                    if (value !== 'DELETE_ACCOUNT') {
+                        return 'You must type DELETE_ACCOUNT to confirm';
+                    }
+                    return null;
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#282c34',
+                cancelButtonColor: '#d33'
+            });
+
+            if (confirmation.isConfirmed && confirmation.value === 'DELETE_ACCOUNT') {
+                const response = await deleteAccount();
+                if (response === "Account Deleted") {
+                    
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your account has been deleted.',
+                        icon: 'success',
+                        customClass: {
+                            confirmButton: 'my-confirm-button'
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Error deleting the journals.',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'my-confirm-button'
+                        }
+                    });
+                }
+                props.setIsLoggedIn(false);
+            }
+        }
+    }
+
     return (
         <div className="settings-page">
             <h3>Settings</h3>
@@ -140,7 +208,7 @@ function Settings(props) {
             <hr style={{ border: '1px solid #ccc' }} />
                 </>
             )}
-            <Button className="del-acc" title="Delete account">Delete account</Button>
+            <Button className="del-acc" title="Delete account" onClick={()=>deleteAlert()}>Delete account</Button>
             </div>
         </div>
     )

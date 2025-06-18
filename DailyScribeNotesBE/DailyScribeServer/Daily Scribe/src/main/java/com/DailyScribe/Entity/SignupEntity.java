@@ -23,6 +23,9 @@ public class SignupEntity {
 	@Column(name="email")
 	private String email;
 	
+	@Column(name="status")
+	private Boolean status;
+	
 	public Long getId() {
 		return id;
 	}
@@ -54,6 +57,16 @@ public class SignupEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+	
+	
 	
 	
 	

@@ -47,5 +47,23 @@ public class LoginPageServicesImpl implements LoginPageServices {
 	public Boolean isEmailTaken(String email) {
 		return signupRepo.existsByEmail(email);
 	}
+	
+	@Override
+	public Boolean deleteAccount(String userName) {
+		try {
+			if(signupRepo.existsByUsername(userName)) {
+				SignupEntity signup = signupRepo.findByUsername(userName);
+				signup.setStatus(false);
+				signupRepo.save(signup);
+				return true;
+			}
+			else {
+				return false;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }

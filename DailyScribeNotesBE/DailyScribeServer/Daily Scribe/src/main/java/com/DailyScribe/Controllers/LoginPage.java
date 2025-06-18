@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,4 +71,19 @@ public class LoginPage {
 		 map.put("isEmailPresent", loginPageServices.isEmailTaken(email));
 		 return ResponseEntity.ok(map);
 	 }
+	 
+	@DeleteMapping("deleteAccount")
+	public ResponseEntity<String> deleteAccount(@RequestParam String userName) {
+			try {
+				Boolean deleteAccount = loginPageServices.deleteAccount(userName);
+				if (deleteAccount) {
+					return ResponseEntity.ok("Account Deleted");
+				} else {
+					return ResponseEntity.ok("Error deleting the account");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting the account");
+			}
+		}
 }

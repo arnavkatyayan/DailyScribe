@@ -136,7 +136,7 @@ function App() {
             path="/settings"
             element={
               isLoggedIn ? (
-                <Settings userName={userName} entries={entries} fetchEntries={getEntriesMain}/>
+                <Settings userName={userName} entries={entries} fetchEntries={getEntriesMain} setIsLoggedIn={setIsLoggedIn}/>
               ) : (
                 <Navigate to="/login" replace />
               )
