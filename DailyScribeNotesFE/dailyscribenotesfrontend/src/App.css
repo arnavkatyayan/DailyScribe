@@ -328,4 +328,7 @@
   position: relative;
   left:7vw;
 }
+.product-name {
+  cursor: pointer;
+}
  

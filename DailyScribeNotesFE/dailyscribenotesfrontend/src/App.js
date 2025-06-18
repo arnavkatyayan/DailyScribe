@@ -1,7 +1,7 @@
 import './App.css';
 import LoginPage from './LoginPage';
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-router-dom";
 import HomePage from './HomePage';
 import { Nav, Navbar } from 'react-bootstrap';
 import LogoDailyScribe from './LogoDailyScribe.png';
@@ -70,10 +70,10 @@ function App() {
     <>
       <Router>
         <div className='header-class'>
-          <div className='logo-name'>
+          <Link to="/" className="logo-name" style={{ textDecoration: 'none', color: 'inherit' }}>
             <img src={LogoDailyScribe} className='logo' />
-            <h1>Daily Scribe</h1>
-          </div>
+            <h1 className='product-name'>DailyScribe</h1>
+          </Link>
           {isLoggedIn ? (
             <Navbar className='navbar-css'>
               <Nav>
