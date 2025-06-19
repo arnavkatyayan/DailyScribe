@@ -136,6 +136,48 @@ return(
 )
 }
 
+export const ViewAndEdit = ({ show, onClose, title, journal, isEdit, handleJournal, handleEditAPI, handleReset }) => {
+  return (
+    <div>
+      <Modal show={show} onHide={onClose} className="signup-modal-body">
+        <Modal.Header closeButton>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        {isEdit === false ?
+          <Modal.Body>
+            <div className="login-modal signup-modal view-css">
+              <h3>{journal}</h3>
+            </div>
+          </Modal.Body> :
+
+          <Modal.Body>
+            <div className="login-modal signup-modal edit-css">
+              <Form>
+                <Form.Label>Your Journal</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter the journal"
+                  style={{ width: '15vw' }}
+                  value={journal}
+                  onChange={handleJournal}
+
+                />
+
+                <div className="btn-grps mt-3">
+                  <Button variant="primary" onClick={handleEditAPI}>Edit</Button>
+                  <Button variant="primary" onClick={handleReset}>Reset</Button>
+                </div>
+              </Form>
+            </div>
+          </Modal.Body>
+
+
+        }
+      </Modal>
+    </div>
+  )
+}
+
 
   
 

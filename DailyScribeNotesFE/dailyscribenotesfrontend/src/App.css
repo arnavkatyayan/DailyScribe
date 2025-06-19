@@ -331,4 +331,13 @@
 .product-name {
   cursor: pointer;
 }
+.view-css {
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0px;
+  right: -11px;
+}
+.edit-css {
+  border: none !important;
+}
  

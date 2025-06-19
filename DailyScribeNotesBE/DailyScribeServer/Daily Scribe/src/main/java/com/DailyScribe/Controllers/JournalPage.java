@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.DailyScribe.DTO.JournalPageDTO;
+import com.DailyScribe.Request.JournalEditRequest;
 import com.DailyScribe.Request.JournalRequest;
 import com.DailyScribe.Services.JournalPageServices;
 
@@ -70,6 +72,29 @@ public class JournalPage {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
 		}
 		
+	}
+	
+	@DeleteMapping("deleteJournal")
+	public ResponseEntity<Boolean> deleteJournal(@RequestParam String userName, @RequestParam Long id) {
+		try {
+			Boolean deleteJournal = journalPageService.deleteJournal(userName,id);
+			return ResponseEntity.ok(deleteJournal);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+
+		}
+	}
+	@PostMapping("editJournal")
+	public ResponseEntity<Boolean> editJournal(@RequestBody JournalEditRequest request) {
+	    try {
+	        Boolean success = journalPageService.editJournal(request.getUserName(), request.getId(), request.getJournal());
+	        return ResponseEntity.ok(success);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
 	}
 	
 }

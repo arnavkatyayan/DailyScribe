@@ -1,6 +1,7 @@
 package com.DailyScribe.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,4 +11,7 @@ public interface JournalRepository extends JpaRepository<JournalEntity, Long> {
 	 List<JournalEntity> findAllByUsername(String username);
 	 void deleteByUsername(String username);
 	 Boolean existsByUsername(String username);
+	 boolean existsByIdAndUsername(Long id,String username);
+	 void deleteById(Long id);
+	 Optional<JournalEntity> findByIdAndUsername(Long id, String username);
 }
