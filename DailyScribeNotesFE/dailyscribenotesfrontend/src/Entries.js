@@ -56,6 +56,7 @@ const handleDelete = async (id) => {
 
 const handleEdit = (id,journalId) => {
     setTitle("Edit your journal");
+    setJournal(props.entries[id].journal);
     setIsEdit(true);
     setShow(true);
     setEditableId(journalId);
@@ -85,6 +86,7 @@ const handleEditAPI = async () => {
         try {
             const response = await axios.post("http://localhost:9090/dailyScribe-journal/editJournal", editJournalRequestBody);
             if (response.data) {
+                await props.fetchEntries();
                 const resp = await Swal.fire({
                     title: 'Success!',
                     text: 'Journal Updated!.',
@@ -118,7 +120,7 @@ const handleReset = () => {
     setJournal(null);
 }
 
-const handleView = (index,id) => {
+const handleView = (index) => {
     setShow(true);
     setTitle("Your Journal");
     setJournal(props.entries[index].journal);
@@ -199,7 +201,3 @@ return (
 )
 }
 export default Entries;
-//Todo for tomorrow-
-//1)handle for title for both view and edit.
-//2)refreshEntries call handle
-//3)UI changes and label changes
