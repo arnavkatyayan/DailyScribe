@@ -115,7 +115,7 @@ public class JournalPageServicesImpl implements JournalPageServices{
 	            journalRepo.save(journalEntity); 
 	            return true;
 	        } else {
-	            return false; // journal with given id and username doesn't exist
+	            return false; 
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

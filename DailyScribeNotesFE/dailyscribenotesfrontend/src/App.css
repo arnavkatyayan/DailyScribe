@@ -340,4 +340,16 @@
 .edit-css {
   border: none !important;
 }
+.searching-sorting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+}
+.label-css {
+  font-weight: 700;
+}
+.form-css-edit {
+  gap:8px;
+}
  

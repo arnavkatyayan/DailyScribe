@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-
+import Typewriter from "typewriter-effect";
 
 export const quotes = [
   "Your journal is your safe place to dream, reflect, and grow.",
@@ -136,7 +136,7 @@ return(
 )
 }
 
-export const ViewAndEdit = ({ show, onClose, title, journal, isEdit, handleJournal, handleEditAPI, handleReset }) => {
+export const ViewAndEdit = ({ show, onClose, title, journal, isEdit, handleJournal, handleEditAPI, handleReset, journalTitle, handleJournalTitle }) => {
   return (
     <div>
       <Modal show={show} onHide={onClose} className="signup-modal-body">
@@ -146,14 +146,33 @@ export const ViewAndEdit = ({ show, onClose, title, journal, isEdit, handleJourn
         {isEdit === false ?
           <Modal.Body>
             <div className="login-modal signup-modal view-css">
-              <h3>{journal}</h3>
+              {/* <h3>{journal}</h3> */}
+               <Typewriter
+                    options={{
+                        strings: [
+                            journal
+                        ],
+                        autoStart: true,
+                        loop: true,
+                        pauseFor:20000
+                    }}
+                />
             </div>
           </Modal.Body> :
 
           <Modal.Body>
             <div className="login-modal signup-modal edit-css">
-              <Form>
-                <Form.Label>Your Journal</Form.Label>
+              <Form className="form-css form-css-edit">
+                <Form.Label className="label-css">Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter the journal"
+                  style={{ width: '15vw' }}
+                  value={journalTitle}
+                  onChange={handleJournalTitle}
+
+                />
+                <Form.Label className="label-css">Journal</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter the journal"

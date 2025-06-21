@@ -8,6 +8,9 @@ import View from './view.png';
 import axios from "axios";
 import Swal from "sweetalert2";
 import { ViewAndEdit } from "./ReusableModalsAndMethods";
+import ReactSwitch from "react-switch";
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
 function Entries(props) {
 const [search , setSearch] = useState("");
@@ -16,7 +19,8 @@ const [title, setTitle] = useState("");
 const [journal, setJournal] = useState(null);
 const [isEdit, setIsEdit] = useState(false);
 const [editableId, setEditableId] = useState(null);
-
+const [sortEnabled, setSortEnabled] = useState(false);
+const [journalTitle, setJournalTitle] = useState("");
 const handleSearch = (evt) => {
     setSearch(evt.target.value);
 }
@@ -60,6 +64,7 @@ const handleEdit = (id,journalId) => {
     setIsEdit(true);
     setShow(true);
     setEditableId(journalId);
+    setJournalTitle(props.entries[id].title);
 }
 
 const handleJournal = (evt) => {
@@ -81,7 +86,8 @@ const handleEditAPI = async () => {
         const editJournalRequestBody = {
             id: editableId,
             userName: props.userName,
-            journal: journal
+            journal: journal,
+            journalTitle:journalTitle
         }
         try {
             const response = await axios.post("http://localhost:9090/dailyScribe-journal/editJournal", editJournalRequestBody);
@@ -122,13 +128,21 @@ const handleReset = () => {
 
 const handleView = (index) => {
     setShow(true);
-    setTitle("Your Journal");
+    setTitle(props.entries[index].title);
     setJournal(props.entries[index].journal);
 }
 
 const onClose = () => {
     setShow(false);
     setIsEdit(false);
+}
+
+const handleSorting = ()=> {
+    setSortEnabled(!sortEnabled);
+}
+
+const handleJournalTitle = (evt) => {
+    setJournalTitle(evt.target.value);
 }
 
 const filteredEntries = props.entries.filter((journal) =>
@@ -140,16 +154,21 @@ const filteredEntries = props.entries.filter((journal) =>
 return (
     <div className="entries-page">
          <h3>Entries</h3>
+    <div className="searching-sorting">     
     <Form>
         <Form.Control
         type="text"
         value={search}
         onChange={handleSearch}
         placeholder="Search for your journals"
-        style={{width:'25vw'}}
+        style={{width:'15vw'}}
         />
 
     </Form>
+    
+    <ReactSwitch id="my-switch" checked={sortEnabled} onChange={handleSorting}/>
+    <Tooltip anchorSelect="#my-switch" content="Sort your journals by date" place="top"  style={{ marginTop: '-30px', marginLeft: '35px' }}/>
+    </div>
 
         <div className="all-entries">
             {filteredEntries.length ? (
@@ -194,6 +213,8 @@ return (
             handleJournal={handleJournal}
             handleReset={handleReset}
             handleEditAPI={handleEditAPI}
+            journalTitle={journalTitle}
+            handleJournalTitle={handleJournalTitle}
             />
 
     
