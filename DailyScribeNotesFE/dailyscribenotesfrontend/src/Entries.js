@@ -139,17 +139,24 @@ const onClose = () => {
 
 const handleSorting = ()=> {
     setSortEnabled(!sortEnabled);
+    
+
+
 }
 
 const handleJournalTitle = (evt) => {
     setJournalTitle(evt.target.value);
 }
 
-const filteredEntries = props.entries.filter((journal) =>
-    journal.title.toLowerCase().includes(search.toLowerCase()) ||
-    journal.journal.toLowerCase().includes(search.toLowerCase())
-);
-
+const filteredEntries = [...props.entries]
+    .filter((journal) =>
+        journal.title.toLowerCase().includes(search.toLowerCase()) ||
+        journal.journal.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+        if (!sortEnabled) return 0; 
+        return new Date(b.date) - new Date(a.date); 
+    });
 
 return (
     <div className="entries-page">
