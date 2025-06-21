@@ -4,6 +4,8 @@ public class JournalEditRequest {
 	private Long id;
 	private String userName;
 	private String journal;
+	private String title;
+	
 	public Long getId() {
 		return id;
 	}
@@ -21,6 +23,12 @@ public class JournalEditRequest {
 	}
 	public void setJournal(String journal) {
 		this.journal = journal;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 	

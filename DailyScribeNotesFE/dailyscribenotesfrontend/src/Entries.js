@@ -87,7 +87,7 @@ const handleEditAPI = async () => {
             id: editableId,
             userName: props.userName,
             journal: journal,
-            journalTitle:journalTitle
+            title:journalTitle
         }
         try {
             const response = await axios.post("http://localhost:9090/dailyScribe-journal/editJournal", editJournalRequestBody);
@@ -174,9 +174,9 @@ return (
             {filteredEntries.length ? (
                 filteredEntries.map((journal, index) => (
                     <div className="journal-position" key={index}>
-                        <h4 className="journals">{journal.title}</h4>
-                        <h5 className="journals">({getDate(journal.date)})</h5>
-                        <p className="journals">{journal.journal}</p>
+                        <h4 className="journals journals-entry-section">{journal.title}</h4>
+                        <h5 className="journals journals-entry-section">({getDate(journal.date)})</h5>
+                        <p className="journals journals-entry-section">{journal.journal}</p>
                         <div className="journal-icons">
                             <img
                                 src={View}

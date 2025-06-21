@@ -106,12 +106,13 @@ public class JournalPageServicesImpl implements JournalPageServices{
 //	}
 	
 	@Override
-	public Boolean editJournal(String userName, Long id, String journal) {
+	public Boolean editJournal(String userName, Long id, String journal, String title) {
 	    try {
 	        Optional<JournalEntity> optionalJournal = journalRepo.findByIdAndUsername(id, userName);
 	        if (optionalJournal.isPresent()) {
 	            JournalEntity journalEntity = optionalJournal.get();
 	            journalEntity.setJournal(journal);
+	            journalEntity.setTitle(title);
 	            journalRepo.save(journalEntity); 
 	            return true;
 	        } else {

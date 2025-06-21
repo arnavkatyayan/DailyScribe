@@ -89,7 +89,7 @@ public class JournalPage {
 	@PostMapping("editJournal")
 	public ResponseEntity<Boolean> editJournal(@RequestBody JournalEditRequest request) {
 	    try {
-	        Boolean success = journalPageService.editJournal(request.getUserName(), request.getId(), request.getJournal());
+	        Boolean success = journalPageService.editJournal(request.getUserName(), request.getId(), request.getJournal(), request.getTitle());
 	        return ResponseEntity.ok(success);
 	    } catch (Exception e) {
 	        e.printStackTrace();

@@ -154,7 +154,8 @@ export const ViewAndEdit = ({ show, onClose, title, journal, isEdit, handleJourn
                         ],
                         autoStart: true,
                         loop: true,
-                        pauseFor:20000
+                        pauseFor:20000,
+                        delay: 30
                     }}
                 />
             </div>

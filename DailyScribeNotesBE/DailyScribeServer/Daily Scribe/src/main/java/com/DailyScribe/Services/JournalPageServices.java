@@ -14,5 +14,5 @@ public interface JournalPageServices {
 	List<JournalPageDTO> getJournals(String userName);
 	Boolean deleteJournals(String userName);
 	Boolean deleteJournal(String userName, Long id);
-	Boolean editJournal(String userName,Long id, String journal);
+	Boolean editJournal(String userName,Long id, String journal, String title);
 }
