@@ -10,4 +10,6 @@ public interface LoginPageServices {
 	Boolean isUsernameTaken(String username);
 	Boolean isEmailTaken(String email);
 	Boolean deleteAccount(String userName);
+	Boolean checkPassword(String userName, String password);
+	Boolean changePassword(String userName, String password, String confirmPassword);
 }

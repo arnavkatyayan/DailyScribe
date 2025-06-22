@@ -67,4 +67,42 @@ public class LoginPageServicesImpl implements LoginPageServices {
 		}
 	}
 
+	@Override
+	public Boolean checkPassword(String userName, String password) {
+		try {
+			if (signupRepo.existsByUsername(userName)) {
+				SignupEntity signup = signupRepo.findByUsername(userName);
+				if (signup.getPassword().equals(password)) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	@Override
+	public Boolean changePassword(String userName, String password, String confirmPassword) {
+		try {
+			if(signupRepo.existsByUsername(userName)) {
+				SignupEntity signup = signupRepo.findByUsername(userName);
+				signup.setPassword(confirmPassword);
+				signupRepo.save(signup);
+				return true;
+			}
+			else {
+				return false;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

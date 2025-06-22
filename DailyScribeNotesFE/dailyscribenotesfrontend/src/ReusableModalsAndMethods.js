@@ -146,7 +146,6 @@ export const ViewAndEdit = ({ show, onClose, title, journal, isEdit, handleJourn
         {isEdit === false ?
           <Modal.Body>
             <div className="login-modal signup-modal view-css">
-              {/* <h3>{journal}</h3> */}
                <Typewriter
                     options={{
                         strings: [
@@ -196,6 +195,43 @@ export const ViewAndEdit = ({ show, onClose, title, journal, isEdit, handleJourn
       </Modal>
     </div>
   )
+}
+
+export const ChangePassword = ({ show, onClose, title, password, confirmPassword, handlePassword, handleConfirmPassword, changePasswordAPI, resetPasswords }) => {
+  return (<Modal show={show} onHide={onClose} className="signup-modal-body">
+    <Modal.Header closeButton>
+      <Modal.Title>{title}</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <div className="login-modal signup-modal edit-css">
+        <Form className="form-css form-css-edit">
+          <Form.Label className="label-css">Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter the password"
+            style={{ width: '15vw' }}
+            value={password}
+            onChange={handlePassword}
+
+          />
+          <Form.Label className="label-css">New Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter the new password"
+            style={{ width: '15vw' }}
+            value={confirmPassword}
+            onChange={handleConfirmPassword}
+
+          />
+
+          <div className="btn-grps mt-3">
+            <Button variant="primary" onClick={changePasswordAPI}>Change</Button>
+            <Button variant="primary" onClick={resetPasswords}>Reset</Button>
+          </div>
+        </Form>
+      </div>
+    </Modal.Body>
+  </Modal>)
 }
 
 

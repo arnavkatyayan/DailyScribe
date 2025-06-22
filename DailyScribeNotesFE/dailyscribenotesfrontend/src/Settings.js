@@ -4,31 +4,41 @@ import {useState, useEffect} from "react";
 import Swal from "sweetalert2";
 import { Button } from "react-bootstrap";
 import axios from "axios";
-
+import { ChangePassword } from "./ReusableModalsAndMethods";
 function Settings(props) {
     const [isChangePasswordClicked, setIsChangePasswordClicked] = useState(false);
-    
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
     const settingsOptions = [
         { name: "Change Password", button: "Change" },
         { name: "Delete Journals", button: "Delete" },
         { name: "Export Data", button: "Export" }
     ];
-
+    
     const handleChanges = (operation) => {
          switch(operation) {
             case "Delete":
             deleteJournals();
             break;
-            // case "Change":
-            // changePassword();
-            // break;
-            // case "Export":
-            // exportJournals();
-            // break;
+            case "Change":
+            changePassword();
+            break;
+            case "Export":
+            exportJournals();
+            break;
             default:
             console.log("No options");
          }   
     };
+
+    const changePassword = () => {
+        setIsChangePasswordClicked(true);
+    }
+
+    const exportJournals = () => {
+        //work in progress !
+    }
 
     const deleteJournalAPI = async () => {
 
@@ -137,6 +147,110 @@ function Settings(props) {
         }
     }
 
+    const onClose = () => {
+        setIsChangePasswordClicked(false);
+    }
+
+    const handleConfirmPassword = (event) => {
+        setConfirmPassword(event.target.value);
+    }
+
+    const handlePassword = (event) => {
+        setPassword(event.target.value);
+    }
+
+    const checkCredentials = async () => {
+        if (password === "") {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter the password.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            return;
+        }
+        if (confirmPassword === "") {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter the confirm password.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            return;
+        }
+        if (password === confirmPassword) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Both passwords are matching.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            return;
+        }
+        try {
+            const response = await axios.get("http://localhost:9090/dailyScribe-login/isPasswordCorrect", { params: { userName: props.userName, password: password }});
+            return response.data;
+        } catch(error) {
+            console.log("Error fetching password details",error);
+            return false;
+        }
+    }
+
+    const changePasswordAPI = async () => {
+        console.log(await checkCredentials());
+        const isCorrect = await checkCredentials();
+        if(!isCorrect) {
+             Swal.fire({
+                title: 'Error!',
+                text: 'The password is not matching for the user.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            return;
+        }
+        const changePasswordRequestBody = {
+            userName:props.userName,
+            password:password,
+            confirmPassword:confirmPassword
+        }
+        try {
+            const response = await axios.post("http://localhost:9090/dailyScribe-login/changePassword", changePasswordRequestBody);
+            if(response.data) {
+                Swal.fire({
+                title: 'Success!',
+                text: 'Password changed!.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            setIsChangePasswordClicked(false);
+            resetPasswords();
+            }
+        } catch (error) {
+            console.log("Error changing the password", error);
+        }
+
+    }
+
+    const resetPasswords = () => {
+        setPassword("");
+        setConfirmPassword("");
+    }
+
     const deleteAlert = async () => {
         const result = await Swal.fire({
             title: 'Are you sure?',
@@ -210,6 +324,17 @@ function Settings(props) {
             )}
             <Button className="del-acc" title="Delete account" onClick={()=>deleteAlert()}>Delete account</Button>
             </div>
+            <ChangePassword 
+            show={isChangePasswordClicked}
+            onClose={onClose}
+            title="Change Password"
+            password={password}
+            confirmPassword={confirmPassword}
+            handlePassword={handlePassword}
+            handleConfirmPassword={handleConfirmPassword}
+            changePasswordAPI={changePasswordAPI}
+            resetPasswords={resetPasswords}
+            />
         </div>
     )
 }
