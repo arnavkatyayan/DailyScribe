@@ -321,7 +321,11 @@
 }
 .del-acc {
   position: absolute;
-  right:7vw;
+  right: 5vw;
+  background-color: red !important;
+  border: none !important;
+  width: 10vw;
+  font-weight: 600 !important;
 }
 .setting-name {
   position: absolute;
