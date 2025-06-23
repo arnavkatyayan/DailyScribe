@@ -58,7 +58,7 @@ export const SignupPage = ({
         <Modal.Body>
           <div className="login-modal signup-modal">
             <Form>
-              <Form.Label>Username</Form.Label>
+              <Form.Label className="label-css">Username</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter the username"
@@ -67,7 +67,7 @@ export const SignupPage = ({
                 onChange={handleUserNameSU}
               />
 
-              <Form.Label>Email</Form.Label>
+              <Form.Label className="label-css">Email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter the email"
@@ -76,7 +76,7 @@ export const SignupPage = ({
                 onChange={handleEmailSU}
               />
 
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="label-css">Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Enter the password"
@@ -85,7 +85,7 @@ export const SignupPage = ({
                 onChange={handlePasswordSU}
               />
 
-              <Form.Label>Confirm Password</Form.Label>
+              <Form.Label className="label-css">Confirm Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Enter the confirm password"
@@ -116,7 +116,7 @@ return(
         <Modal.Body>
           <div className="login-modal signup-modal">
             <Form>
-              <Form.Label>Username</Form.Label>
+              <Form.Label className="label-css">Username</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter the username"
@@ -243,7 +243,7 @@ return(
         <Modal.Body>
           <div className="login-modal signup-modal">
             <Form>
-              <Form.Label>Username</Form.Label>
+              <Form.Label className="label-css">Username</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter the username"
@@ -251,7 +251,7 @@ return(
                 value={userName}
                 onChange={handleUserName}
               />
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="label-css">Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Enter the password"

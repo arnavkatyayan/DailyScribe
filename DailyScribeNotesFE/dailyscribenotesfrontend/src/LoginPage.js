@@ -330,7 +330,7 @@ function LoginPage(props) {
             <h1>Login / Signup</h1>
             <div className="login-modal">
                 <Form>
-                    <Form.Label>Username</Form.Label>
+                    <Form.Label className="label-css">Username</Form.Label>
                     <Form.Control
                         type="text"
                         value={userName}
@@ -338,7 +338,7 @@ function LoginPage(props) {
                         onChange={handleUserName}
                         style={{ width: '15vw' }}
                     />
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label className="label-css">Password</Form.Label>
                     <Form.Control
                         type="password"
                         style={{ width: '15vw' }}
