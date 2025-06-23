@@ -20,7 +20,7 @@ function App() {
   });
   const [isNewUser, setIsNewUser] = useState(false);
   const [isForgetPass, setIsForgetPass] = useState(false);
-
+  const [isRestoreAcc, setIsRestoreAcc] = useState(false);
   const [entries, setEntries] = useState(() => {
   const stored = sessionStorage.getItem("entries");
   return stored ? JSON.parse(stored) : [];
@@ -66,6 +66,10 @@ function App() {
     setIsForgetPass(true);
   }
 
+  const handleRestoreAccount = () => {
+    setIsRestoreAcc(true);
+  }
+
   return (
     <>
       <Router>
@@ -87,7 +91,7 @@ function App() {
               <Nav>
                 <Nav.Link onClick={handleSignup}>Signup</Nav.Link>
                 <Nav.Link onClick={handleForgetPassword}>Forget Password</Nav.Link>
-                <Nav.Link>Restore Account</Nav.Link>
+                <Nav.Link onClick={handleRestoreAccount}>Restore Account</Nav.Link>
               </Nav>
             </Navbar>
           )}
@@ -119,6 +123,8 @@ function App() {
                 setUsername={setUsername}
                 isNewUser={isNewUser}
                 setIsNewUser={setIsNewUser}
+                isRestoreAcc={isRestoreAcc}
+                setIsRestoreAcc={setIsRestoreAcc}
               />
             }
           />

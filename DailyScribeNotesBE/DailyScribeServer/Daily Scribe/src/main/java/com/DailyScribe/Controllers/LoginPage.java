@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.DailyScribe.Request.ChangePasswordRequest;
 import com.DailyScribe.Request.LoginRequest;
+import com.DailyScribe.Request.RestoreAccountRequest;
 import com.DailyScribe.Request.SignupRequest;
 import com.DailyScribe.Services.LoginPageServices;
 
@@ -105,6 +106,16 @@ public class LoginPage {
 		}catch(Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+		}
+	}
+	@PostMapping("/restoreAccount")
+	public ResponseEntity<String> restoreAccount(@RequestBody RestoreAccountRequest restoreAccountRequest) {
+		try {
+			String restoreAcc = loginPageServices.restoreAccount(restoreAccountRequest.getUserName(),restoreAccountRequest.getPassword());
+			return ResponseEntity.ok(restoreAcc);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Invalid response");
 		}
 	}
 }

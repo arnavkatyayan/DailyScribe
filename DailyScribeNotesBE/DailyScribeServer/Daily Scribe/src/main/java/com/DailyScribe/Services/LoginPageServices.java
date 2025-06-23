@@ -12,4 +12,5 @@ public interface LoginPageServices {
 	Boolean deleteAccount(String userName);
 	Boolean checkPassword(String userName, String password);
 	Boolean changePassword(String userName, String password, String confirmPassword);
+	String restoreAccount(String userName, String password);
 }

@@ -105,4 +105,27 @@ public class LoginPageServicesImpl implements LoginPageServices {
 		}
 	}
 
+	@Override
+	public String restoreAccount(String userName, String password) {
+		try {
+			if (signupRepo.existsByUsernameAndPassword(userName, password)) {
+				SignupEntity signup = signupRepo.findByUsername(userName);
+				Boolean isStatusTrue = signup.getStatus();
+				if (isStatusTrue) {
+					return "Account is available";
+				} else {
+					signup.setStatus(true);
+					signupRepo.save(signup);
+					return "Account is restored";
+				}
+			} else {
+				return "Account not found!";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Account not found!";
+		}
+
+	}
+
 }

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Button, Form , Modal } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-//import SignupPage from "./ReusableModalsAndMethods";
-import { SignupPage, ForgetPasswordPage } from "./ReusableModalsAndMethods";
+import { SignupPage, ForgetPasswordPage, RestoreAccountWindow } from "./ReusableModalsAndMethods";
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
 
@@ -20,9 +19,85 @@ function LoginPage(props) {
     const [confirmPasswordSU, setConfirmPasswordSU] = useState("");
     const [isForgetPass, setIsForgetPass] = useState(false);
     const [showForgetPassModal, setShowForgetPassModal] = useState(false);
+    const [userNameRestore,setUserNameRestore] = useState("");
+    const [passwordRestore, setPasswordRestore] = useState("");
 
     const handleNewUser = () => {
         setIsNewUser(!isNewUser);
+    }
+
+    const handleUserNameRestore = (event) => {
+        setUserNameRestore(event.target.value);
+    }
+
+    const handlePasswordRestore = (event) => {
+        setPasswordRestore(event.target.value);
+    }
+
+    const handleResetRestore = () => {
+        setUserNameRestore("");
+        setPasswordRestore("");
+    }
+
+    const restoreAccountAPI = async () => {
+        if (userNameRestore === "") {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter the username.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            return;
+        }
+        if (passwordRestore === "") {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter the password.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            return;
+        }
+        const restoreAccountRequestBody = {
+            userName:userNameRestore,
+            password:passwordRestore
+        }
+        try {
+            const response = await axios.post("http://localhost:9090/dailyScribe-login/restoreAccount", restoreAccountRequestBody);
+            if(response.data === "Account is Restored") {
+                 Swal.fire({
+                title: 'Success!',
+                text: response.data,
+                icon: 'success',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+
+            });
+            handleResetRestore();
+            props.setIsRestoreAcc(false);
+            }
+            else {
+                Swal.fire({
+                title: 'Info!',
+                text: response.data,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-confirm-button'
+                }
+            });
+            }
+        } catch(error) {
+            console.log("Getting error while restoring the account", error);        
+        }
     }
 
     const handleUserName = (evt) => {
@@ -242,6 +317,10 @@ function LoginPage(props) {
         props.setIsForgetPass(false);
     }
 
+    const handleCloseRestorAcc = () => {
+        props.setIsRestoreAcc(false);
+    }
+
     const handleForgetPassword = () => {
         setIsForgetPass(!isForgetPass);
     }
@@ -290,13 +369,25 @@ function LoginPage(props) {
                     handleReset={handleResetSU}
                 />
                 <ForgetPasswordPage
-                show={props.isForgetPass}
-                onClose={handleClosePass}
-                title="Forget Password"
-                userName={userName}
-                handleUsername={handleUserName}
-                handleForgetPassword={handleForgetPassAPI}
+                    show={props.isForgetPass}
+                    onClose={handleClosePass}
+                    title="Forget Password"
+                    userName={userName}
+                    handleUsername={handleUserName}
+                    handleForgetPassword={handleForgetPassAPI}
                 />
+                <RestoreAccountWindow
+                show={props.isRestoreAcc}
+                onClose={handleCloseRestorAcc}
+                title="Restore your existing account"
+                userName={userNameRestore}
+                password={passwordRestore}
+                handleUserName={handleUserNameRestore}
+                handlePassword={handlePasswordRestore}
+                handleResetRestore={handleResetRestore}
+                restoreAccountAPI={restoreAccountAPI}
+                />
+
 
             </div>
         </div>

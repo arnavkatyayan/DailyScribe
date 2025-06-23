@@ -126,7 +126,7 @@ return(
               />
 
               <div className="btn-grps mt-3">
-                <Button variant="primary" onClick={handleForgetPassword}>Sign Up</Button>
+                <Button variant="primary" onClick={handleForgetPassword}>Send</Button>
               </div>
             </Form>
           </div>
@@ -232,6 +232,44 @@ export const ChangePassword = ({ show, onClose, title, password, confirmPassword
       </div>
     </Modal.Body>
   </Modal>)
+}
+export const RestoreAccountWindow = ({show,onClose,title,userName,password,handleUserName,handlePassword, handleResetRestore,restoreAccountAPI})=> {
+return(
+    <div>
+      <Modal show={show} onHide={onClose} className="signup-modal-body">
+        <Modal.Header closeButton>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="login-modal signup-modal">
+            <Form>
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter the username"
+                style={{ width: '15vw' }}
+                value={userName}
+                onChange={handleUserName}
+              />
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter the password"
+                style={{ width: '15vw' }}
+                value={password}
+                onChange={handlePassword}
+              />
+
+              <div className="btn-grps mt-3">
+                <Button variant="primary" onClick={restoreAccountAPI}>Restore</Button>
+                <Button variant="primary" onClick={handleResetRestore}>Reset</Button>
+              </div>
+            </Form>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
+)
 }
 
 

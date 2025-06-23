@@ -36,6 +36,10 @@
     transform: rotate(360deg);
   }
 }
+body {
+    background: linear-gradient(to right, #f8f8f8, #eaeaea);
+    font-family: 'Segoe UI', sans-serif;
+}
 .login-page {
   display: flex;
   align-items: center;
