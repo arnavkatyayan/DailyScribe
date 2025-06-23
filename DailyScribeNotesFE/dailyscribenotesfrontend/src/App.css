@@ -54,11 +54,12 @@ body {
 .login-modal {
   height:28vh;
   width: 17vw;
-  border-radius: 5px;
-  border:1px solid grey;
+  /* border-radius: 5px;
+  border:1px solid grey; */
   padding:17px;
   overflow: auto;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);
+  background-color: white;
 } 
 .btn-grps {
   display: flex;
@@ -135,6 +136,10 @@ body {
   position: relative;
   right: -62px;
   top:-2px;
+  height:39vh;
+}
+.signup-modal-dimensions {
+  height: 44vh;
 }
 .login-page-btns {
   display: flex;
@@ -202,6 +207,7 @@ body {
   padding:14px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: auto;
+  background-color: white;
 }
 .rhs-css {
   display: flex;
@@ -255,6 +261,7 @@ body {
   overflow: auto;
   padding:30px;
   position: relative;
+  background-color: white;
 }
 .journal-icons-size {
   height: 35px;
@@ -294,6 +301,7 @@ body {
   box-shadow: 0 20px 12px rgba(0, 0, 0, 0.1);
   padding:15px;
   position: relative;
+  background-color: white;
 }
 .settings-options {
   display: flex;

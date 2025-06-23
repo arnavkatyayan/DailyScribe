@@ -55,7 +55,7 @@ export const SignupPage = ({
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="signup-modal-dimensions">
           <div className="login-modal signup-modal">
             <Form>
               <Form.Label className="label-css">Username</Form.Label>
