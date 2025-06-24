@@ -6,6 +6,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,26 +90,7 @@ public class JournalPageServicesImpl implements JournalPageServices{
 		}
 	}
 
-//	@Override
-//	public Boolean editJournal(String userName, Long id, String journal) {
-//		try {
-//			if(journalRepo.existsByIdAndUsername(id, userName)) {
-//				System.out.print("Inside editJournal method");
-//				JournalEntity journalEntity = new JournalEntity();
-//				journalEntity.setJournal(journal);
-//				journalEntity.setDate(Timestamp.valueOf(LocalDateTime.now()));
-//				journalRepo.save(journalEntity);
-//				return true;
-//			}
-//			else {
-//				return false;
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
-	
+
 	@Override
 	public Boolean editJournal(String userName, Long id, String journal, String title) {
 	    try {
@@ -124,5 +110,28 @@ public class JournalPageServicesImpl implements JournalPageServices{
 	    }
 	}
 
+	@Override
+	public byte[] generateJournalsPdf(List<JournalEntity> journals) throws Exception {
+		 ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-}
+	        Document document = new Document();
+	        PdfWriter.getInstance(document, out);
+	        document.open();
+
+	        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
+	        Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+
+	        for (JournalEntity journal : journals) {
+	            document.add(new Paragraph("Title: " + journal.getTitle(), titleFont));
+	            document.add(new Paragraph("Date: " + journal.getDate().toString(), normalFont));
+	            document.add(new Paragraph("Journal: " + journal.getJournal(), normalFont));
+	            document.add(new Paragraph("------------------------------------------------------------"));
+	        }
+
+	        document.close();
+	        return out.toByteArray();
+	    }
+	}
+
+
+

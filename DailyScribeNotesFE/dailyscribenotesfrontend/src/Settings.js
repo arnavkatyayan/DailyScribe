@@ -36,9 +36,36 @@ function Settings(props) {
         setIsChangePasswordClicked(true);
     }
 
-    const exportJournals = () => {
-        //work in progress !
-    }
+    const exportJournals = async () => {
+        try {
+            // 🔸 1. Call the backend with the username
+            const response = await axios.get(
+                "http://localhost:9090/dailyScribe-journal/exportJournals",
+                {
+                    params: { userName: props.userName },   // query-param: ?userName=…
+                    responseType: "blob",                   // return raw PDF bytes
+                    headers: { Accept: "application/pdf" }
+                }
+            );
+
+            // 🔸 2. Create a blob URL and trigger a download
+            const blob = new Blob([response.data], { type: "application/pdf" });
+            const url = window.URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "journals.pdf";          // file name user sees
+            document.body.appendChild(link);
+            link.click();
+
+            // 🔸 3. Cleanup
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (err) {
+            console.error("Export failed", err);
+
+        }
+    };
 
     const deleteJournalAPI = async () => {
 

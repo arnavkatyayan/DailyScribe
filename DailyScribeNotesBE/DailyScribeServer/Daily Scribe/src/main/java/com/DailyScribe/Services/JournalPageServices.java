@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.DailyScribe.DTO.JournalPageDTO;
+import com.DailyScribe.Entity.JournalEntity;
 import com.DailyScribe.Request.JournalRequest;
 
 @Service
@@ -15,4 +16,5 @@ public interface JournalPageServices {
 	Boolean deleteJournals(String userName);
 	Boolean deleteJournal(String userName, Long id);
 	Boolean editJournal(String userName,Long id, String journal, String title);
+	byte[] generateJournalsPdf(List<JournalEntity> journals) throws Exception;
 }

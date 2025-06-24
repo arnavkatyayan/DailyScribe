@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 
 import com.DailyScribe.DTO.JournalPageDTO;
+import com.DailyScribe.Entity.JournalEntity;
+import com.DailyScribe.Repository.JournalRepository;
 import com.DailyScribe.Request.JournalEditRequest;
 import com.DailyScribe.Request.JournalRequest;
 import com.DailyScribe.Services.JournalPageServices;
@@ -28,6 +33,9 @@ public class JournalPage {
 	
 	@Autowired
 	JournalPageServices journalPageService;
+	
+	@Autowired
+	JournalRepository journalrepo;
 
 	@PostMapping("/addJournal")
 	public ResponseEntity<Boolean> saveJournalDetails(@RequestBody JournalRequest journalRequest) {
@@ -60,7 +68,7 @@ public class JournalPage {
 
 		}
 	}
-	@DeleteMapping("deleteJournals")
+	@DeleteMapping("/deleteJournals")
 	public ResponseEntity<Boolean> deleteJournals(@RequestParam String userName) {
 		
 		try {
@@ -74,7 +82,7 @@ public class JournalPage {
 		
 	}
 	
-	@DeleteMapping("deleteJournal")
+	@DeleteMapping("/deleteJournal")
 	public ResponseEntity<Boolean> deleteJournal(@RequestParam String userName, @RequestParam Long id) {
 		try {
 			Boolean deleteJournal = journalPageService.deleteJournal(userName,id);
@@ -86,7 +94,7 @@ public class JournalPage {
 
 		}
 	}
-	@PostMapping("editJournal")
+	@PostMapping("/editJournal")
 	public ResponseEntity<Boolean> editJournal(@RequestBody JournalEditRequest request) {
 	    try {
 	        Boolean success = journalPageService.editJournal(request.getUserName(), request.getId(), request.getJournal(), request.getTitle());
@@ -96,5 +104,28 @@ public class JournalPage {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
 	    }
 	}
+	@GetMapping("/exportJournals")
+	public ResponseEntity<byte[]> exportJournals(@RequestParam String userName) {
+	    try {
+	        List<JournalEntity> journals = journalrepo.findAllByUsername(userName);
+	        if (journals.isEmpty()) {
+	            return ResponseEntity.notFound().build();
+	        }
+
+	        byte[] pdfData = journalPageService.generateJournalsPdf(journals);
+
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_PDF);
+	        headers.setContentDisposition(ContentDisposition.builder("attachment")
+	                .filename("journals.pdf")
+	                .build());
+
+	        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }
+	}
+
 	
 }
