@@ -290,7 +290,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  top:7vw;
+  top:4vw;
   flex-direction: column;
 }
 .settings-box {
@@ -339,13 +339,11 @@ body {
   width: 10vw;
   font-weight: 600 !important;
 }
-.setting-name {
-  position: absolute;
-  left:15px;
-}
 .setting-button {
-  position: relative;
-  left:7vw;
+  position: absolute;
+  left: 5vw;
+  top: 11vw;
+  width: 9vw;
 }
 .product-name {
   cursor: pointer;
@@ -371,4 +369,19 @@ body {
 .form-css-edit {
   gap:8px;
 }
- 
+.settings-grid-structure {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(2,1fr);
+  gap:50px;
+}
+.setting-name {
+  text-align: center;
+  font-weight:900;
+}
+.setting-description {
+  position: absolute;
+    top: 5vw;
+    max-width: 89%;
+    font-weight: 700;
+}

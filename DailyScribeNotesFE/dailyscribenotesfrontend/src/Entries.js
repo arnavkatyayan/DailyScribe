@@ -160,7 +160,6 @@ const filteredEntries = [...props.entries]
 
 return (
     <div className="entries-page">
-         <h3>Entries</h3>
     <div className="searching-sorting">     
     <Form>
         <Form.Control

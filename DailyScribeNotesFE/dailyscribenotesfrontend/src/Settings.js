@@ -11,21 +11,43 @@ function Settings(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const settingsOptions = [
-        { name: "Change Password", button: "Change" },
-        { name: "Delete Journals", button: "Delete" },
-        { name: "Export Data", button: "Export" }
+        {
+            name: "Change Password",
+            button: "Change Password",
+            description: "Securely update your current password to protect your account and privacy."
+        },
+        {
+            name: "Delete Journals",
+            button: "Delete Journals",
+            description: "Permanently remove all your saved journal entries. This action cannot be undone."
+        },
+        {
+            name: "Export Data",
+            button: "Export Data",
+            description: "Download a backup of all your journals in PDF format for offline access or safekeeping."
+        },
+        {
+            name: "Delete Account",
+            button: "Delete Account",
+            description: "Permanently delete your account and all associated data. You can restore it later if needed."
+        }
     ];
+
+
     
     const handleChanges = (operation) => {
          switch(operation) {
-            case "Delete":
+            case "Delete Journals":
             deleteJournals();
             break;
-            case "Change":
+            case "Change Password":
             changePassword();
             break;
-            case "Export":
+            case "Export Data":
             exportJournals();
+            break;
+            case "Delete Account":
+            deleteAlert();
             break;
             default:
             console.log("No options");
@@ -138,7 +160,7 @@ function Settings(props) {
 
 
     const checkDisabled = (option) => {
-        if(option === "Change") {
+        if(option === "Change Password") {
             return false;
         }
         else {
@@ -147,20 +169,6 @@ function Settings(props) {
             }
         }
         return false;
-    }
-
-    const getByTitle = (option) => {
-        if(option === "Change") {
-            return "Change Password";
-        }
-        else if(option === "Export" && props.entries.length>0) {
-            return "Export Journals";
-        }
-        else if(option === "Delete" && props.entries.length>0) {
-            return "Delete Journals";
-        }
-            return "No Journals available";
-        
     }
 
     const deleteAccount = async () => {
@@ -337,19 +345,18 @@ function Settings(props) {
 
     return (
         <div className="settings-page">
-            <h3>Settings</h3>
-            <div className="settings-box">
+           
+            <div className="settings-grid-structure">
             {settingsOptions.map((setting)=>
             <>
-            <div className="settings-options">
-                <h5 className="setting-name">{setting.name}</h5>
-                <Button title={getByTitle(setting.button)} disabled={checkDisabled(setting.button)} className="setting-button" onClick={()=>handleChanges(setting.button)}>{setting.button}</Button>
-
+            <div className="settings-box">
+                <h4 className="setting-name">{setting.name}</h4>
+                <p className="setting-name setting-description">{setting.description}</p>
+                <Button className="setting-button" disabled={checkDisabled(setting.name)} onClick={() => handleChanges(setting.name)}>{setting.button}</Button>
                 </div>
-            <hr style={{ border: '1px solid #ccc' }} />
-                </>
+             </>   
             )}
-            <Button className="del-acc" title="Delete account" onClick={()=>deleteAlert()}>Delete account</Button>
+            
             </div>
             <ChangePassword 
             show={isChangePasswordClicked}
