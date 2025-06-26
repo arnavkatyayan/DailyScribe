@@ -28,8 +28,10 @@ function HomePage(props) {
             props.setEntries(response.data);
             sessionStorage.setItem("entries", JSON.stringify(response.data));
             if (response.data) {
-                prepareList(response.data);
-
+                const resp = [...response.data].sort(
+                    (a, b) => new Date(b.date) - new Date(a.date)
+                );
+                prepareList(resp);
             }
         }
         catch (error) {

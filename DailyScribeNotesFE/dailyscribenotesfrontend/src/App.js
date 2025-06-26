@@ -90,7 +90,7 @@ function App() {
             <Navbar className='navbar-css'>
               <Nav>
                 <Nav.Link onClick={handleSignup}>Signup</Nav.Link>
-                <Nav.Link onClick={handleForgetPassword}>Forget Password</Nav.Link>
+                {/* <Nav.Link onClick={handleForgetPassword}>Forget Password</Nav.Link> */}
                 <Nav.Link onClick={handleRestoreAccount}>Restore Account</Nav.Link>
               </Nav>
             </Navbar>
