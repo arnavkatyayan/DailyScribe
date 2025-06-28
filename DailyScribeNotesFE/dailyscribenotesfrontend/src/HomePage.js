@@ -12,6 +12,7 @@ function HomePage(props) {
     const [date, setDate] = useState("");
     const [title, setTitle] = useState("");
     const [recentEntries, setRecentEntries] = useState([]);
+    const [days, setDays] = useState(-1);
 
     useEffect(() => {
         const num = Math.floor(Math.random() * quotes.length);
@@ -21,6 +22,26 @@ function HomePage(props) {
         setDate(formattedDate);
         getEntries();
     }, []);
+
+    const getJournalsForThisWeek = (data, today = new Date()) => {
+        const dayOfWeek = today.getDay();              // 0=Sun … 6=Sat
+        const msPerDay = 24 * 60 * 60 * 1000;
+
+        // Monday of this week (00:00 local)
+        const monday = new Date(today.getTime() - ((dayOfWeek + 6) % 7) * msPerDay);
+        monday.setHours(0, 0, 0, 0);
+
+        // Sunday of this week (23:59:59.999 local)
+        const sunday = new Date(monday.getTime() + 6 * msPerDay);
+        sunday.setHours(23, 59, 59, 999);
+
+        // Filter entries inside the range [monday, sunday]
+        const journals = data.filter(item => {
+            const journalDate = new Date(item.date);
+            return journalDate >= monday && journalDate <= sunday;
+        });
+        setDays(journals.length);        
+    };
 
     const getEntries = async () => {
         try {
@@ -32,6 +53,7 @@ function HomePage(props) {
                     (a, b) => new Date(b.date) - new Date(a.date)
                 );
                 prepareList(resp);
+                getJournalsForThisWeek(resp);
             }
         }
         catch (error) {
@@ -170,7 +192,8 @@ function HomePage(props) {
             <div className="rhs-css">
                 <div className="quick-stats">
                     <h3>Quick Stats</h3>
-                    <h5 className="entries">This week:</h5>
+                    <h5 className="entries">This week: {days}</h5>
+                    <h5 className="entries">Mostly Mood:Happy</h5>
                 </div>
                 <div className="quick-stats recently-added">
                     <h3>Recent Entries</h3>
