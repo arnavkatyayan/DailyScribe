@@ -271,7 +271,59 @@ return(
     </div>
 )
 }
+export const ExportJournalsWindow = ({show,onClose,title, journalName, journalPassword, handleJournalName, handleJournalPassword, isEncryptionNeeded, handleEncryptionPassword, handleExportReset})=> {
+return(
+    <div>
+      <Modal show={show} onHide={onClose} className="signup-modal-body">
+        <Modal.Header closeButton>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="login-modal signup-modal export-modal">
+          <ul className="journals-guidelines">
+            <li>Enter a journal name if you’d like to save it with a custom title if not it will save as "journals".</li>
+            <li>The journal will be exported as PDF.</li>
+            <li>Enable the checkbox to add an optional layer of encryption.</li>
+            <li>None of the below fields are mandatory fields</li>
+          </ul>
 
+
+            <Form>
+              <Form.Label className="label-css">Journal Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter the journal name"
+                style={{ width: '15vw' }}
+                value={journalName}
+                onChange={handleJournalName}
+              />
+           
+            <div className="encryption">
+              <Form.Label className="label-css">Do you want to encrypt ? </Form.Label>
+              <input type="checkbox" className="encryption-checkbox" checked={isEncryptionNeeded} onChange={handleEncryptionPassword} />
+            </div>
+            
+            {isEncryptionNeeded ?
+              <div className="encryption-password-css">
+                <Form.Label className="label-css">Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter the password"
+                  style={{ width: '15vw' }}
+                  value={journalPassword}
+                  onChange={handleJournalPassword}
+                /></div> : null}
+              <div className="btn-grps mt-3">
+                <Button variant="primary">Export</Button>
+                <Button variant="primary" onClick={()=>handleExportReset()}>Reset</Button>
+              </div>
+            </Form>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
+)
+}
 
   
 

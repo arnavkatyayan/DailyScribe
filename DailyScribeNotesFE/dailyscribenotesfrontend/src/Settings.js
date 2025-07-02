@@ -4,12 +4,27 @@ import {useState, useEffect} from "react";
 import Swal from "sweetalert2";
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import { ChangePassword } from "./ReusableModalsAndMethods";
+import { ChangePassword, ExportJournalsWindow } from "./ReusableModalsAndMethods";
+
 function Settings(props) {
     const [isChangePasswordClicked, setIsChangePasswordClicked] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
+    const [isExportJournal, setIsExportJournal] = useState(false);
+    const [journalName, setJournalName] = useState("");
+    const [isEncryptionNeeded, setIsEncryptionNeeded] = useState(false);
+    const [journalPassword, setJournalPassword] = useState("");
+    const dateFormatOptions = [
+        { value: 'dddd, MMMM Do YYYY', label: 'dddd, MMMM Do YYYY' },
+        { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' },
+        { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY' },
+        { value: 'MMM Do, YYYY', label: 'MMM Do, YYYY' },
+        { value: 'dddd MMMM YY', label: 'dddd MMMM YY' },
+    ];
+    const [selectedDateVal, setSelectedDateVal] = useState(null);
+    //adding name of the file 
+    //adding dates
+    //password protection
     const settingsOptions = [
         {
             name: "Change Password",
@@ -58,7 +73,15 @@ function Settings(props) {
         setIsChangePasswordClicked(true);
     }
 
-    const exportJournals = async () => {
+    const exportJournals = () => {
+        setIsExportJournal(true);
+    }
+
+    const handleSelectedDate = (val) => {
+        setSelectedDateVal(val);
+    }
+
+    const exportJournalAPI = async () => {
         try {
             // 🔸 1. Call the backend with the username
             const response = await axios.get(
@@ -286,6 +309,28 @@ function Settings(props) {
         setConfirmPassword("");
     }
 
+    const onCloseExportWindow = () => {
+        setIsExportJournal(false);
+    }
+
+    const handleJournalName = (evt) => {
+        setJournalName(evt.target.value);
+    }
+
+    const handleJournalPassword = (evt) => {
+        setJournalPassword(evt.target.value);
+    }
+
+    const handleEncryptionPassword = () => {
+        setIsEncryptionNeeded((prev) => !prev);
+    };
+
+    const handleExportReset = () => {
+        setIsEncryptionNeeded(false);
+        setJournalName("");
+        setJournalPassword("");
+    }
+
     const deleteAlert = async () => {
         const result = await Swal.fire({
             title: 'Are you sure?',
@@ -368,6 +413,19 @@ function Settings(props) {
             handleConfirmPassword={handleConfirmPassword}
             changePasswordAPI={changePasswordAPI}
             resetPasswords={resetPasswords}
+            />
+            <ExportJournalsWindow
+            show={isExportJournal}
+            onClose={onCloseExportWindow}
+            title="Export your journals"
+            journalName={journalName}
+            journalPassword={journalPassword}
+            handleJournalName={handleJournalName}
+            handleJournalPassword={handleJournalPassword}
+            isEncryptionNeeded={isEncryptionNeeded}
+            dateFormatOptions={dateFormatOptions}
+            handleEncryptionPassword={handleEncryptionPassword}
+            handleExportReset={handleExportReset}
             />
         </div>
     )

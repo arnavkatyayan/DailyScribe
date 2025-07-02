@@ -385,3 +385,36 @@ body {
   max-width: 89%;
   font-weight: 700;
 }
+.encryption-checkbox {
+  cursor: pointer;
+  height: 17px;
+  width: 20px;
+  position: absolute;
+  right: 37px;
+  top: 6px;
+}
+.encryption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  top: 17px;
+  right:62px;
+}
+.encryption-password-css {
+  position: relative;
+  top:18px;
+}
+.journals-guidelines li {
+    font-size: medium;
+    font-weight: 600;
+}
+.journals-guidelines {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.export-modal {
+  height: 45vh;
+}
