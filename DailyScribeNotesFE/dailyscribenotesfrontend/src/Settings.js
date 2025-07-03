@@ -14,17 +14,7 @@ function Settings(props) {
     const [journalName, setJournalName] = useState("");
     const [isEncryptionNeeded, setIsEncryptionNeeded] = useState(false);
     const [journalPassword, setJournalPassword] = useState("");
-    const dateFormatOptions = [
-        { value: 'dddd, MMMM Do YYYY', label: 'dddd, MMMM Do YYYY' },
-        { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' },
-        { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY' },
-        { value: 'MMM Do, YYYY', label: 'MMM Do, YYYY' },
-        { value: 'dddd MMMM YY', label: 'dddd MMMM YY' },
-    ];
-    const [selectedDateVal, setSelectedDateVal] = useState(null);
-    //adding name of the file 
-    //adding dates
-    //password protection
+
     const settingsOptions = [
         {
             name: "Change Password",
@@ -75,10 +65,6 @@ function Settings(props) {
 
     const exportJournals = () => {
         setIsExportJournal(true);
-    }
-
-    const handleSelectedDate = (val) => {
-        setSelectedDateVal(val);
     }
 
     const exportJournalAPI = async () => {
@@ -313,6 +299,12 @@ function Settings(props) {
         setIsExportJournal(false);
     }
 
+    useEffect(() => {
+        if (!isEncryptionNeeded) {
+            setJournalPassword("");
+        }
+    }, [isEncryptionNeeded]);
+
     const handleJournalName = (evt) => {
         setJournalName(evt.target.value);
     }
@@ -423,7 +415,6 @@ function Settings(props) {
             handleJournalName={handleJournalName}
             handleJournalPassword={handleJournalPassword}
             isEncryptionNeeded={isEncryptionNeeded}
-            dateFormatOptions={dateFormatOptions}
             handleEncryptionPassword={handleEncryptionPassword}
             handleExportReset={handleExportReset}
             />

@@ -284,7 +284,7 @@ return(
             <li>Enter a journal name if you’d like to save it with a custom title if not it will save as "journals".</li>
             <li>The journal will be exported as PDF.</li>
             <li>Enable the checkbox to add an optional layer of encryption.</li>
-            <li>None of the below fields are mandatory fields</li>
+            <li>None of the below fields are mandatory fields.</li>
           </ul>
 
 
@@ -303,7 +303,6 @@ return(
               <input type="checkbox" className="encryption-checkbox" checked={isEncryptionNeeded} onChange={handleEncryptionPassword} />
             </div>
             
-            {isEncryptionNeeded ?
               <div className="encryption-password-css">
                 <Form.Label className="label-css">Password</Form.Label>
                 <Form.Control
@@ -312,7 +311,8 @@ return(
                   style={{ width: '15vw' }}
                   value={journalPassword}
                   onChange={handleJournalPassword}
-                /></div> : null}
+                  disabled={!isEncryptionNeeded}
+                /></div>
               <div className="btn-grps mt-3">
                 <Button variant="primary">Export</Button>
                 <Button variant="primary" onClick={()=>handleExportReset()}>Reset</Button>
