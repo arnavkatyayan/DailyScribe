@@ -57,6 +57,12 @@
     <artifactId>itextpdf</artifactId>
     <version>5.5.13.2</version>
 </dependency>
+<dependency>
+  <groupId>org.bouncycastle</groupId>
+  <!-- JDK 17+ → use the “jdk18on” artifacts -->
+  <artifactId>bcprov-jdk18on</artifactId>
+  <version>1.78</version>
+</dependency>
 
 <dependency>
   <groupId>org.flywaydb</groupId>

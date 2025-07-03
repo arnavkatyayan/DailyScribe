@@ -1,5 +1,7 @@
 package com.DailyScribe.Controllers;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,19 +107,25 @@ public class JournalPage {
 	    }
 	}
 	@GetMapping("/exportJournals")
-	public ResponseEntity<byte[]> exportJournals(@RequestParam String userName) {
+	public ResponseEntity<byte[]> exportJournals(@RequestParam String userName, @RequestParam String journalName, @RequestParam String journalPassword) {
 	    try {
 	        List<JournalEntity> journals = journalrepo.findAllByUsername(userName);
 	        if (journals.isEmpty()) {
 	            return ResponseEntity.notFound().build();
 	        }
 
-	        byte[] pdfData = journalPageService.generateJournalsPdf(journals);
-
+	        byte[] pdfData = journalPageService.generateJournalsPdf(journals,journalPassword);
+			String name;
+			if (journalName == null || journalName.trim().isEmpty()) {
+				name = "journals";
+			} else {
+				name = journalName;
+			}
+			System.out.println(journalName);
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.APPLICATION_PDF);
 	        headers.setContentDisposition(ContentDisposition.builder("attachment")
-	                .filename("journals.pdf")
+	        		  .filename(URLEncoder.encode(name + ".pdf", StandardCharsets.UTF_8).replaceAll("\\+", "%20"))
 	                .build());
 
 	        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);

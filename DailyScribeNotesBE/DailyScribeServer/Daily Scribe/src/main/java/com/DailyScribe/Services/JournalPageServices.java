@@ -16,5 +16,5 @@ public interface JournalPageServices {
 	Boolean deleteJournals(String userName);
 	Boolean deleteJournal(String userName, Long id);
 	Boolean editJournal(String userName,Long id, String journal, String title);
-	byte[] generateJournalsPdf(List<JournalEntity> journals) throws Exception;
+	byte[] generateJournalsPdf(List<JournalEntity> journals, String password) throws Exception;
 }

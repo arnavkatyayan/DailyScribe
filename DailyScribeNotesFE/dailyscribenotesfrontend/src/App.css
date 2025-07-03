@@ -391,7 +391,7 @@ body {
   width: 20px;
   position: absolute;
   right: 37px;
-  top: 6px;
+  top: 5px;
 }
 .encryption {
   display: flex;
@@ -416,5 +416,8 @@ body {
     gap: 10px;
 }
 .export-modal {
-  height: 45vh;
+  height: 55vh;
+}
+.btn-grps-export {
+  top:33px;
 }

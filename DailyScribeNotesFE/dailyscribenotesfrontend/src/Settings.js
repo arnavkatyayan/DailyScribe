@@ -73,19 +73,21 @@ function Settings(props) {
             const response = await axios.get(
                 "http://localhost:9090/dailyScribe-journal/exportJournals",
                 {
-                    params: { userName: props.userName },   // query-param: ?userName=…
+                    params: { userName: props.userName,journalName:journalName,journalPassword:journalPassword },   // query-param: ?userName=…
                     responseType: "blob",                   // return raw PDF bytes
                     headers: { Accept: "application/pdf" }
                 }
             );
 
             // 🔸 2. Create a blob URL and trigger a download
+            setIsExportJournal(false);
+            handleExportReset();
             const blob = new Blob([response.data], { type: "application/pdf" });
             const url = window.URL.createObjectURL(blob);
 
             const link = document.createElement("a");
             link.href = url;
-            link.download = "journals.pdf";          // file name user sees
+            link.download = journalName.trim().length ===0 ? "journals.pdf":journalName.trim();          
             document.body.appendChild(link);
             link.click();
 
@@ -250,7 +252,6 @@ function Settings(props) {
     }
 
     const changePasswordAPI = async () => {
-        console.log(await checkCredentials());
         const isCorrect = await checkCredentials();
         if(!isCorrect) {
              Swal.fire({
@@ -417,6 +418,7 @@ function Settings(props) {
             isEncryptionNeeded={isEncryptionNeeded}
             handleEncryptionPassword={handleEncryptionPassword}
             handleExportReset={handleExportReset}
+            exportJournalAPI={exportJournalAPI}
             />
         </div>
     )

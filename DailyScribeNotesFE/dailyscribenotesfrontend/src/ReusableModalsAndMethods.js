@@ -271,7 +271,7 @@ return(
     </div>
 )
 }
-export const ExportJournalsWindow = ({show,onClose,title, journalName, journalPassword, handleJournalName, handleJournalPassword, isEncryptionNeeded, handleEncryptionPassword, handleExportReset})=> {
+export const ExportJournalsWindow = ({show,onClose,title, journalName, journalPassword, handleJournalName, handleJournalPassword, isEncryptionNeeded, handleEncryptionPassword, handleExportReset,exportJournalAPI})=> {
 return(
     <div>
       <Modal show={show} onHide={onClose} className="signup-modal-body">
@@ -313,8 +313,8 @@ return(
                   onChange={handleJournalPassword}
                   disabled={!isEncryptionNeeded}
                 /></div>
-              <div className="btn-grps mt-3">
-                <Button variant="primary">Export</Button>
+              <div className="btn-grps mt-3 btn-grps-export">
+                <Button variant="primary" onClick={()=>exportJournalAPI()}>Export</Button>
                 <Button variant="primary" onClick={()=>handleExportReset()}>Reset</Button>
               </div>
             </Form>

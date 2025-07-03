@@ -6,11 +6,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,27 +113,42 @@ public class JournalPageServicesImpl implements JournalPageServices{
 	    }
 	}
 
-	@Override
-	public byte[] generateJournalsPdf(List<JournalEntity> journals) throws Exception {
-		 ByteArrayOutputStream out = new ByteArrayOutputStream();
+	public byte[] generateJournalsPdf(List<JournalEntity> journals, String password) throws Exception {
 
-	        Document document = new Document();
-	        PdfWriter.getInstance(document, out);
-	        document.open();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Document document = new Document();
 
-	        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
-	        Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+// ——— 1.  Create the PdfWriter ———
+		PdfWriter writer = PdfWriter.getInstance(document, out);
 
-	        for (JournalEntity journal : journals) {
-	            document.add(new Paragraph("Title: " + journal.getTitle(), titleFont));
-	            document.add(new Paragraph("Date: " + journal.getDate().toString(), normalFont));
-	            document.add(new Paragraph("Journal: " + journal.getJournal(), normalFont));
-	            document.add(new Paragraph("------------------------------------------------------------"));
-	        }
+// ——— 2.  Apply encryption if a password is provided ———
+		if (password != null && !password.trim().isEmpty()) {
+			byte[] userPwd = password.getBytes(StandardCharsets.UTF_8);
+			byte[] ownerPwd = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8); // server‑side owner pwd
 
-	        document.close();
-	        return out.toByteArray();
-	    }
+			writer.setEncryption(userPwd, // password end‑user must enter
+					ownerPwd, // owner password (kept secret)
+					PdfWriter.ALLOW_PRINTING, // permissions (customise as needed)
+					PdfWriter.ENCRYPTION_AES_128 // algorithm (use AES‑256 if your iText build supports it)
+			);
+		}
+
+// ——— 3.  Build the PDF content ———
+		document.open();
+
+		Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
+		Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+
+		for (JournalEntity journal : journals) {
+			document.add(new Paragraph("Title: " + journal.getTitle(), titleFont));
+			document.add(new Paragraph("Date: " + journal.getDate(), normalFont));
+			document.add(new Paragraph("Journal: " + journal.getJournal(), normalFont));
+			document.add(new Paragraph("------------------------------------------------------------"));
+		}
+
+		document.close(); // also flushes writer/out
+		return out.toByteArray();
+	}
 	}
 
 
