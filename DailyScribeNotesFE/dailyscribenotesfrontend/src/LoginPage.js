@@ -360,13 +360,12 @@ function LoginPage(props) {
                         <Button onClick={handleLogin}>Login</Button>
                         <Button onClick={handleReset}>Reset</Button>
                     </div>
-                   
                 </Form>
 
                 <SignupPage
                     show={props.isNewUser}
                     onClose={handleClose}
-                    title="Sign-Up Page"
+                    title="Signup"
                     userNameSU={userNameSU}
                     passwordSU={passwordSU}
                     emailSU={emailSU}
@@ -389,7 +388,7 @@ function LoginPage(props) {
                 <RestoreAccountWindow
                 show={props.isRestoreAcc}
                 onClose={handleCloseRestorAcc}
-                title="Restore your existing account"
+                title="Restore Account"
                 userName={userNameRestore}
                 password={passwordRestore}
                 handleUserName={handleUserNameRestore}

@@ -30,6 +30,17 @@ export const quotes = [
   "Every page turned is a step toward peace."
 ];
 
+const restoreAccountMessages = [
+  "Enter your registered username & password to begin the recovery process.",
+  "Your data is safe — this process won’t affect your existing journals.",
+];
+
+const changePasswordMessages = [
+  "Keep your account secure by updating your password regularly.",
+  "Make sure both password and confirm password fields match.",
+  "After saving, you'll need to use the new password to log in next time."
+];
+
 const featuresDescription = [
   "DailyScribe is a modern journaling app designed for capturing thoughts, moods, and daily reflections.",
   "It offers a clean, distraction-free writing interface with optional password protection for privacy.",
@@ -229,6 +240,11 @@ export const ChangePassword = ({ show, onClose, title, password, confirmPassword
     </Modal.Header>
     <Modal.Body>
       <div className="login-modal signup-modal edit-css">
+        <ul className="journals-guidelines">
+          {changePasswordMessages.map((message)=> (
+            <li>{message}</li>
+          ))}
+        </ul>
         <Form className="form-css form-css-edit">
           <Form.Label className="label-css">Password</Form.Label>
           <Form.Control
@@ -267,6 +283,11 @@ return(
         </Modal.Header>
         <Modal.Body>
           <div className="login-modal signup-modal">
+            <ul className="journals-guidelines">
+              {restoreAccountMessages.map((message)=>
+             <li>{message}</li> 
+            )}
+              </ul>
             <Form>
               <Form.Label className="label-css">Username</Form.Label>
               <Form.Control
