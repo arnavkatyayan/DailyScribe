@@ -6,6 +6,7 @@ import axios from "axios";
 import { SignupPage, ForgetPasswordPage, RestoreAccountWindow } from "./ReusableModalsAndMethods";
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
+import { InfoPageDetails } from "./ReusableModalsAndMethods";
 
 function LoginPage(props) {
     const navigate = useNavigate();
@@ -239,6 +240,10 @@ function LoginPage(props) {
                 icon: 'warning',
                 title: 'Missing Fields',
                 text: 'Please enter both username and password.',
+                confirmButton: 'my-confirm-button',
+                customClass: {
+                confirmButton: 'my-confirm-button'
+                }
             });
             return;
         }
@@ -327,9 +332,14 @@ function LoginPage(props) {
 
     return (
         <div className="login-page">
-            <h1>Login / Signup</h1>
-            <div className="login-modal">
-                <Form>
+            <div className="intro-page">
+                <InfoPageDetails/>
+            </div>
+            
+            <div className="login-modal syncing-dimensions">
+                 
+                <Form className="login-form">
+                   <h3 className="login-title">Login/Signup</h3>
                     <Form.Label className="label-css">Username</Form.Label>
                     <Form.Control
                         type="text"
@@ -346,7 +356,7 @@ function LoginPage(props) {
                         placeholder="Enter the password"
                         onChange={handlePassword}
                     />
-                    <div className="btn-grps">
+                    <div className="btn-grps login-btns">
                         <Button onClick={handleLogin}>Login</Button>
                         <Button onClick={handleReset}>Reset</Button>
                     </div>

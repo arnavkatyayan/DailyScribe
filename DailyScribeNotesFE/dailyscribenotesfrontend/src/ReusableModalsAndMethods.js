@@ -30,8 +30,33 @@ export const quotes = [
   "Every page turned is a step toward peace."
 ];
 
+const featuresDescription = [
+  "DailyScribe is a modern journaling app designed for capturing thoughts, moods, and daily reflections.",
+  "It offers a clean, distraction-free writing interface with optional password protection for privacy.",
+  "Users can export journals in PDF format, including named files and encryption for secure backups.",
+  "Enables sorting and searching features for great ease of use.",
+  "Sleek and readable UI that enhances the overall writing experience.",
+  "Built with React, Spring Boot, and Postgres — lightweight, responsive, and ready for real-world journaling."
+];
+
+
 export const getDate = (date) => {
   return date.split("T")[0];
+}
+
+export const InfoPageDetails = () => {
+  return (
+    <Typewriter
+      options={{
+        strings: featuresDescription,
+        autoStart: true,
+        loop: true,
+        pauseFor: 200,     // pause before deleting
+        delay: 50,         // default is 75 ms → 25 ms is 3× faster
+        deleteSpeed: 10,   // speed for erasing (optional)
+      }}
+    />
+  )
 }
 
 export const SignupPage = ({
