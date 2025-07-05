@@ -429,6 +429,8 @@ body {
   padding: 25px;
   font-size: xx-large;
   font-weight: 900;
+  text-align: center;
+  padding-top: 104px;
 }
 .syncing-dimensions {
   height: 46vh;

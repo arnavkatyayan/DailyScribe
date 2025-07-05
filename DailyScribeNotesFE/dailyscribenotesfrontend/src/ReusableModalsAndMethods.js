@@ -51,9 +51,9 @@ export const InfoPageDetails = () => {
         strings: featuresDescription,
         autoStart: true,
         loop: true,
-        pauseFor: 200,     // pause before deleting
-        delay: 50,         // default is 75 ms → 25 ms is 3× faster
-        deleteSpeed: 10,   // speed for erasing (optional)
+        pauseFor: 500,
+        delay: 75,         
+        deleteSpeed: 5,   
       }}
     />
   )
