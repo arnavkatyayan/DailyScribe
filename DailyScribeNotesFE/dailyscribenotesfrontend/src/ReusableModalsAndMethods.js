@@ -38,6 +38,7 @@ const restoreAccountMessages = [
 const changePasswordMessages = [
   "Keep your account secure by updating your password regularly.",
   "Make sure both password and confirm password fields match.",
+  "Avoid using old passwords or easily guessable information.",
   "After saving, you'll need to use the new password to log in next time."
 ];
 
@@ -239,7 +240,7 @@ export const ChangePassword = ({ show, onClose, title, password, confirmPassword
       <Modal.Title>{title}</Modal.Title>
     </Modal.Header>
     <Modal.Body>
-      <div className="login-modal signup-modal edit-css">
+      <div className="login-modal signup-modal edit-css export-modal">
         <ul className="journals-guidelines">
           {changePasswordMessages.map((message)=> (
             <li>{message}</li>

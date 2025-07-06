@@ -13,6 +13,7 @@ function HomePage(props) {
     const [title, setTitle] = useState("");
     const [recentEntries, setRecentEntries] = useState([]);
     const [days, setDays] = useState(-1);
+    const [daysForMonth, setDaysForMonth] = useState(-1);
 
     useEffect(() => {
         const num = Math.floor(Math.random() * quotes.length);
@@ -43,6 +44,19 @@ function HomePage(props) {
         setDays(journals.length);        
     };
 
+    const getJournalsForThisMonth = (data, today = new Date()) => {
+        const year = today.getFullYear();
+        const month = today.getMonth();          // 0‑based (0 = Jan)
+
+        const journalsThisMonth = data.filter(item => {
+            const d = new Date(item.date);
+            return d.getFullYear() === year && d.getMonth() === month;
+        });
+
+        setDaysForMonth(journalsThisMonth.length);
+    };
+
+
     const getEntries = async () => {
         try {
             const response = await axios.get("http://localhost:9090/dailyScribe-journal/getJournals", { params: { userName: props.userName } });
@@ -54,6 +68,7 @@ function HomePage(props) {
                 );
                 prepareList(resp);
                 getJournalsForThisWeek(resp);
+                getJournalsForThisMonth(resp);
             }
         }
         catch (error) {
@@ -191,9 +206,9 @@ function HomePage(props) {
             </div>
             <div className="rhs-css">
                 <div className="quick-stats">
-                    <h3>Quick Stats</h3>
+                    <h3>Quick stats</h3>
                     <h5 className="entries">This week: {days}</h5>
-                    <h5 className="entries">Mostly Mood:Happy</h5>
+                    <h5 className="entries">This month: {daysForMonth}</h5>
                 </div>
                 <div className="quick-stats recently-added">
                     <h3>Recent Entries</h3>
