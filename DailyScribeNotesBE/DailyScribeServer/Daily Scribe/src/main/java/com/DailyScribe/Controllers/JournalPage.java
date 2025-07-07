@@ -121,7 +121,6 @@ public class JournalPage {
 			} else {
 				name = journalName;
 			}
-			System.out.println(journalName);
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.APPLICATION_PDF);
 	        headers.setContentDisposition(ContentDisposition.builder("attachment")

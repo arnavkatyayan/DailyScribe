@@ -271,10 +271,15 @@ body {
   gap:10px;
   position: absolute;
   right: 0;
-  top: 19px;
+  top: 5px;
+  padding: 5px;
 }
 .journal-position {
   position: relative;
+  background-color: #f8f9fa;
+  padding:8px;
+  height: 12.2vh;
+  cursor: pointer;
 }
 .no-journal-css {
   top: 12vw;
@@ -458,4 +463,7 @@ body {
   top: -50px;
   position: relative;
   font-weight: 700;
+}
+.journal-position:hover {
+  background-color: #fcfcfd;
 }
