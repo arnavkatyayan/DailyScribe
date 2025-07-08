@@ -118,4 +118,16 @@ public class LoginPage {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Invalid response");
 		}
 	}
+	@GetMapping("/forgetPassword")
+	public ResponseEntity<Boolean> forgetPassword(@RequestParam String userName) {
+		try {
+			Boolean isPassChanged = loginPageServices.forgetPassword(userName);
+			return ResponseEntity.ok(isPassChanged);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+
+		}
+		
+	}
 }

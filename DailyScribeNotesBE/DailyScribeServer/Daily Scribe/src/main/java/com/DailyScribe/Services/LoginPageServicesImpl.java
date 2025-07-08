@@ -1,6 +1,9 @@
 package com.DailyScribe.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.DailyScribe.Entity.SignupEntity;
@@ -11,6 +14,12 @@ public class LoginPageServicesImpl implements LoginPageServices {
 
 	@Autowired
 	SignupRepository signupRepo;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Value("${spring.mail.username}")
+	private String sendToMail;
 	
 	@Override
 	public Boolean isCredentialsCorrect(String userName, String password) {
@@ -126,6 +135,61 @@ public class LoginPageServicesImpl implements LoginPageServices {
 			return "Account not found!";
 		}
 
+	}
+
+	@Override
+	public Boolean forgetPassword(String userName) {
+		
+		String password = generatePassword();
+		try {
+			if(signupRepo.existsByUsername(userName)) {
+				SignupEntity signup = signupRepo.findByUsername(userName);
+				String email = signup.getEmail();
+				sendSimpleEmail(email,"New password",password,password);
+				return true;
+			}
+			else {
+				return false;
+			}
+		} catch(Exception e) {
+			
+		e.printStackTrace();
+		return false;
+		}
+	}
+	
+	  public void sendSimpleEmail(String toEmail, String subject, String body, String password) {
+	        SimpleMailMessage message = new SimpleMailMessage();
+	        
+	        message.setFrom(sendToMail);
+	        message.setTo(toEmail);
+	        message.setSubject(subject);
+	        message.setText(body);
+	        
+	        mailSender.send(message);
+	        System.out.println("Mail sent successfully!");
+	    }
+	
+	public String generatePassword() {
+		
+		int len = getLength(8);
+		 char[] passwordChars = (
+	                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+	                "abcdefghijklmnopqrstuvwxyz" +
+	                "0123456789" +
+	                "!@#$%^&*()-_=+[]{}|;:,.<>?/").toCharArray();
+		 StringBuilder pass = new StringBuilder();
+		for(int i=0;i<len;i++) {
+		    int index = (int)(Math.random()*passwordChars.length);
+            pass.append(passwordChars[index]);
+		}
+		return pass.toString();
+	}
+	
+	public int getLength(int min) {
+		int num = (int)(Math.random()*min)+min;
+		return num;
+				
 	}
 
 }

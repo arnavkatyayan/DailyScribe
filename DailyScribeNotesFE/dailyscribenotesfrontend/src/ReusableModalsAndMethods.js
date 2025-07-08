@@ -51,6 +51,12 @@ const featuresDescription = [
   "Built with React, Spring Boot, and Postgres — lightweight, responsive, and ready for real-world journaling."
 ];
 
+const forgetPasswordPoints = [
+  "Easily reset your account password if you forget it.",
+  "Please enter the your username and the new password will be shared on mail.",
+  "After successful reset, you'll be redirected to the login screen."
+];
+
 
 export const getDate = (date) => {
   return date.split("T")[0];
@@ -152,6 +158,11 @@ return(
         </Modal.Header>
         <Modal.Body>
           <div className="login-modal signup-modal">
+          <ul className="journals-guidelines">
+            {forgetPasswordPoints.map((message) => (
+              <li>{message}</li>
+            ))}
+          </ul>
             <Form>
               <Form.Label className="label-css">Username</Form.Label>
               <Form.Control
@@ -163,7 +174,7 @@ return(
               />
 
               <div className="btn-grps mt-3">
-                <Button variant="primary" onClick={handleForgetPassword}>Send</Button>
+                <Button variant="primary" onClick={()=> handleForgetPassword()}>Send</Button>
               </div>
             </Form>
           </div>

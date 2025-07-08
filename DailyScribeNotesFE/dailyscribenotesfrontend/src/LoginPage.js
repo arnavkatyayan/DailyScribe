@@ -22,6 +22,7 @@ function LoginPage(props) {
     const [showForgetPassModal, setShowForgetPassModal] = useState(false);
     const [userNameRestore,setUserNameRestore] = useState("");
     const [passwordRestore, setPasswordRestore] = useState("");
+    const [userNameForgetPassword, setUserNameForgetPassword] = useState("");
 
     const handleNewUser = () => {
         setIsNewUser(!isNewUser);
@@ -295,22 +296,35 @@ function LoginPage(props) {
         setUserName("");
     }
 
-    const handleSignup = () => {
-        setShowSignupModal(true);
-    }
-
-    const handleForgetPassMain = () => {
-        setShowForgetPassModal(true);
-    }
-
     const handleForgetPassAPI = async () => {
-        if (!userName.trim()) {
+        if (!userNameForgetPassword.trim()) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Missing username',
                 text: 'Please enter username.',
             });
             return;
+        }
+        try {
+            const response = await axios.get("http://localhost:9090/dailyScribe-login/forgetPassword", { params: { userName: userNameForgetPassword } })
+            if (response.data === true) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Mail Sent.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'my-confirm-button'
+                    }
+
+                }).then(() => {
+                    props.setIsForgetPass(false);
+                });
+            }
+        }
+        catch (error) {
+            console.log("Error sending the mail");
+            return false;
         }
     }
 
@@ -327,7 +341,11 @@ function LoginPage(props) {
     }
 
     const handleForgetPassword = () => {
-        setIsForgetPass(!isForgetPass);
+        props.setIsForgetPass(true);
+    }
+
+    const handleUserNameForgetPassword = (event) => {
+        setUserNameForgetPassword(event.target.value);
     }
 
     return (
@@ -360,6 +378,7 @@ function LoginPage(props) {
                         <Button onClick={handleLogin}>Login</Button>
                         <Button onClick={handleReset}>Reset</Button>
                     </div>
+                    <p className="forget-password-text" onClick={handleForgetPassword}>Forget Password?</p>
                 </Form>
 
                 <SignupPage
@@ -381,8 +400,8 @@ function LoginPage(props) {
                     show={props.isForgetPass}
                     onClose={handleClosePass}
                     title="Forget Password"
-                    userName={userName}
-                    handleUsername={handleUserName}
+                    userName={userNameForgetPassword}
+                    handleUsername={handleUserNameForgetPassword}
                     handleForgetPassword={handleForgetPassAPI}
                 />
                 <RestoreAccountWindow

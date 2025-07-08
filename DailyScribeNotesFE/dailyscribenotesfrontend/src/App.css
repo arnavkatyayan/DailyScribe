@@ -469,3 +469,14 @@ body {
   transform: scale(1.04);
   transition: transform 0.2s ease-in-out;
 }
+.forget-password-text {
+  text-align: center;
+  position: relative;
+  top: 50px;
+  font-size: larger;
+  font-weight: 600;
+  cursor: pointer;
+}
+.forget-password-text:hover {
+  text-decoration: underline;
+}

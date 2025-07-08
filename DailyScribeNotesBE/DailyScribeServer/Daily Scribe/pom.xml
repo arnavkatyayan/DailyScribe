@@ -58,6 +58,11 @@
     <version>5.5.13.2</version>
 </dependency>
 <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+
+<dependency>
   <groupId>org.bouncycastle</groupId>
   <!-- JDK 17+ → use the “jdk18on” artifacts -->
   <artifactId>bcprov-jdk18on</artifactId>
