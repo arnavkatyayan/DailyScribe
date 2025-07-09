@@ -45,8 +45,18 @@ public class LoginPageServicesImpl implements LoginPageServices {
 		signupEntity.setEmail(email);
 		signupEntity.setPassword(password);
 		signupRepo.save(signupEntity);
+		sendNewUserMail(email,"New User","Thanks for signing up on DailyScribe! Keep journaling");
 		return true;
 	}
+	
+	public void sendNewUserMail(String toEmail, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(sendToMail);
+        message.setTo(toEmail);
+        message.setSubject(subject);
+        message.setText(body);
+        mailSender.send(message);
+    }
 
 	@Override
 	public Boolean isUsernameTaken(String username) {
@@ -103,6 +113,7 @@ public class LoginPageServicesImpl implements LoginPageServices {
 				SignupEntity signup = signupRepo.findByUsername(userName);
 				signup.setPassword(confirmPassword);
 				signupRepo.save(signup);
+				sendChangePasswordMail(signup.getEmail(),"Password Changed","Your password has been changed");
 				return true;
 			}
 			else {
@@ -113,6 +124,15 @@ public class LoginPageServicesImpl implements LoginPageServices {
 			return false;
 		}
 	}
+	
+	public void sendChangePasswordMail(String toEmail, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(sendToMail);
+        message.setTo(toEmail);
+        message.setSubject(subject);
+        message.setText(body);
+        mailSender.send(message);
+    }
 
 	@Override
 	public String restoreAccount(String userName, String password) {
@@ -145,7 +165,7 @@ public class LoginPageServicesImpl implements LoginPageServices {
 			if(signupRepo.existsByUsername(userName)) {
 				SignupEntity signup = signupRepo.findByUsername(userName);
 				String email = signup.getEmail();
-				sendSimpleEmail(email,"New password",password,password);
+				sendForgetPasswordMail(email,"New password",password);
 				return true;
 			}
 			else {
@@ -158,16 +178,15 @@ public class LoginPageServicesImpl implements LoginPageServices {
 		}
 	}
 	
-	  public void sendSimpleEmail(String toEmail, String subject, String body, String password) {
+	  public void sendForgetPasswordMail(String toEmail, String subject, String body) {
 	        SimpleMailMessage message = new SimpleMailMessage();
 	        
 	        message.setFrom(sendToMail);
 	        message.setTo(toEmail);
 	        message.setSubject(subject);
-	        message.setText(body);
+	        message.setText("The requested password for the user is:"+body);
 	        
 	        mailSender.send(message);
-	        System.out.println("Mail sent successfully!");
 	    }
 	
 	public String generatePassword() {
