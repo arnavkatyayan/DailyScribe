@@ -480,3 +480,12 @@ body {
 .forget-password-text:hover {
   text-decoration: underline;
 }
+.adding-counters {
+  display: flex;
+  gap:10px;
+  position: relative;
+  right:-6px;
+}
+.adding-counters p {
+  font-weight: 600;
+}

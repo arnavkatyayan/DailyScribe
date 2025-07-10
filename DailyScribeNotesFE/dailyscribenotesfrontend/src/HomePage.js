@@ -14,6 +14,8 @@ function HomePage(props) {
     const [recentEntries, setRecentEntries] = useState([]);
     const [days, setDays] = useState(-1);
     const [daysForMonth, setDaysForMonth] = useState(-1);
+    const [words, setWords] = useState(0);
+    const [characters, setCharacters] = useState(-1);
 
     useEffect(() => {
         const num = Math.floor(Math.random() * quotes.length);
@@ -177,6 +179,13 @@ function HomePage(props) {
         setJournal(evt.target.value)
     }
 
+    useEffect(()=> {
+        const characterCount = journal.length;
+        const wordCount = journal.trim() === "" ? 0 : journal.trim().split(/\s+/).length;
+        setCharacters(characterCount);
+        setWords(wordCount);
+    },[journal]);
+
     return (
         <div className="homepage-parent">
             <div className="homepage">
@@ -198,6 +207,11 @@ function HomePage(props) {
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                         <Form.Control as="textarea" rows={5} placeholder="Enter your journal for the day" className="journal-box" value={journal} onChange={handleJournal} />
                     </Form.Group>
+                    <div className="adding-counters">
+                        <p className="counters">Word count: {words}</p>
+                        <p>|</p>
+                        <p>Characters count: {characters}</p>
+                    </div>
                 </Form>
                 <div className="btn-grps">
                     <Button onClick={handleSave}>Save</Button>
