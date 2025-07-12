@@ -24,6 +24,9 @@ public class JournalEntity {
     @Column(name = "title")
     private String title;
     
+    @Column(name = "star")
+    private Boolean star;
+    
     public Long getId() {
         return id;
     }
@@ -63,6 +66,15 @@ public class JournalEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public Boolean getStar() {
+		return star;
+	}
+
+	public void setStar(Boolean star) {
+		this.star = star;
+	}
+	
 	
 
     

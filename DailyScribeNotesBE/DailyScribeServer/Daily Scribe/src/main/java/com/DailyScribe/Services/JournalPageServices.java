@@ -17,4 +17,5 @@ public interface JournalPageServices {
 	Boolean deleteJournal(String userName, Long id);
 	Boolean editJournal(String userName,Long id, String journal, String title);
 	byte[] generateJournalsPdf(List<JournalEntity> journals, String password) throws Exception;
+	void updateStarSystem(String userName, int index, Boolean isSelected);
 }

@@ -1,0 +1,2 @@
+ALTER TABLE dailyscribeschema.journals
+ADD COLUMN star BOOLEAN NOT NULL DEFAULT FALSE;

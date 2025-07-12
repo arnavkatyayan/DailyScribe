@@ -4,6 +4,8 @@ import { Form, Button } from "react-bootstrap";
 import { getDate } from "./ReusableModalsAndMethods";
 import Edit from "./editJournal.png";
 import Delete from "./deleteJournal.png";
+import starSelectedImg from "./starSelected.png";
+import starUnselectedImg from "./starUnselected.png";
 import View from './view.png';
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -21,6 +23,9 @@ const [isEdit, setIsEdit] = useState(false);
 const [editableId, setEditableId] = useState(null);
 const [sortEnabled, setSortEnabled] = useState(false);
 const [journalTitle, setJournalTitle] = useState("");
+const [selectedStars, setSelectedStars] = useState(
+  props.entries?.filter(entry => entry.star === true).map(entry => entry.id) || []
+);
 const handleSearch = (evt) => {
     setSearch(evt.target.value);
 }
@@ -139,14 +144,34 @@ const onClose = () => {
 
 const handleSorting = ()=> {
     setSortEnabled(!sortEnabled);
-    
-
-
 }
 
 const handleJournalTitle = (evt) => {
     setJournalTitle(evt.target.value);
 }
+
+const handleStar = async (index) => {
+    const isSelected = selectedStars.includes(index);
+    setSelectedStars((prev) => {
+        if (prev.includes(index)) {
+            return prev.filter((i) => i !== index);
+        } else {
+            return [...prev, index];
+        }
+    });
+    try {
+        await axios.post("http://localhost:9090/dailyScribe-journal/starRating", {
+            userName: props.userName,
+            starIndex: index,
+            isSelected: !isSelected
+
+        });
+        console.log("Your journal is highlighted");
+    }
+    catch (error) {
+        console.log("error saving stars",error);
+    }
+};
 
 const filteredEntries = [...props.entries]
     .filter((journal) =>
@@ -184,6 +209,12 @@ return (
                         <h5 className="journals journals-entry-section">({getDate(journal.date)})</h5>
                         <p className="journals journals-entry-section">{journal.journal}</p>
                         <div className="journal-icons">
+                            <img
+                                src={selectedStars.includes(journal.id) ? starSelectedImg : starUnselectedImg}
+                                onClick={() => handleStar(journal.id)}
+                                className="journal-icons-size"
+                                title="Highlight your favourite journal"
+                            />
                             <img
                                 src={View}
                                 onClick={() => handleView(index)}

@@ -8,10 +8,11 @@ public class JournalPageDTO {
     private String journal;
     private Timestamp date;
     private Long Id;
+    private Boolean star;
     public JournalPageDTO() {
     }
 
-    public JournalPageDTO(String title, String journal, Timestamp date, Long Id) {
+    public JournalPageDTO(String title, String journal, Timestamp date, Long Id, Boolean star) {
         this.title = title;
         this.journal = journal;
         this.date = date;
@@ -48,6 +49,14 @@ public class JournalPageDTO {
 
 	public void setId(Long id) {
 		Id = id;
+	}
+
+	public Boolean getStar() {
+		return star;
+	}
+
+	public void setStar(Boolean star) {
+		this.star = star;
 	}
     
     

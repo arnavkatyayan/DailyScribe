@@ -53,6 +53,7 @@ public class JournalPageServicesImpl implements JournalPageServices{
 			dto.setJournal(journal.getJournal());
 			dto.setDate(journal.getDate());
 			dto.setId(journal.getId());
+			dto.setStar(journal.getStar());
 			journalDTOList.add(dto);
 		}
 		return journalDTOList;
@@ -149,7 +150,19 @@ public class JournalPageServicesImpl implements JournalPageServices{
 		document.close(); // also flushes writer/out
 		return out.toByteArray();
 	}
+
+	@Override
+	public void updateStarSystem(String userName, int index, Boolean isSelected) {
+		
+		Optional<JournalEntity> userPresent = journalRepo.findByIdAndUsername(Long.valueOf(index), userName);
+		if(userPresent.isPresent()) {
+			JournalEntity journal = userPresent.get();
+			journal.setStar(isSelected);
+			journalRepo.save(journal);
+		}
+		
 	}
+}
 
 
 

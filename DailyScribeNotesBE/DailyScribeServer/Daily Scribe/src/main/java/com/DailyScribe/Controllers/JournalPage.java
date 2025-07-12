@@ -26,6 +26,7 @@ import com.DailyScribe.Entity.JournalEntity;
 import com.DailyScribe.Repository.JournalRepository;
 import com.DailyScribe.Request.JournalEditRequest;
 import com.DailyScribe.Request.JournalRequest;
+import com.DailyScribe.Request.StarRatingRequest;
 import com.DailyScribe.Services.JournalPageServices;
 
 @RestController
@@ -133,6 +134,20 @@ public class JournalPage {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	    }
 	}
+
+	@PostMapping("/starRating")
+	public ResponseEntity<?> updateStarRating(@RequestBody StarRatingRequest starRatingRequest) {
+		try {
+			journalPageService.updateStarSystem(starRatingRequest.getUserName(),starRatingRequest.getStarIndex(),starRatingRequest.getIsSelected());
+			return ResponseEntity.ok().build();
+		} catch(Exception e) {
+			e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update star rating");
+
+		}
+	}
+
+	
 
 	
 }
