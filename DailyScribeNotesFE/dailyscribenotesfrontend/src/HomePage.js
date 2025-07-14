@@ -141,7 +141,8 @@ function HomePage(props) {
             userName: props.userName,
             title: title,
             journal: journal,
-            date: date
+            date: date,
+            star:false
         };
 
         try {

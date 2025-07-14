@@ -7,6 +7,7 @@ public class JournalRequest {
 	private String userName;
 	private Timestamp date;
 	private String journal;
+	private Boolean star;
 	
 	public String getTitle() {
 		return title;
@@ -32,6 +33,13 @@ public class JournalRequest {
 	public void setJournal(String journal) {
 		this.journal = journal;
 	}
+	public Boolean getStar() {
+		return star;
+	}
+	public void setStar(Boolean star) {
+		this.star = star;
+	}
+	
 	
 	
 }

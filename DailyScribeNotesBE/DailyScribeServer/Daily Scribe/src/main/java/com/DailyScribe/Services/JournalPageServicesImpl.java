@@ -37,6 +37,7 @@ public class JournalPageServicesImpl implements JournalPageServices{
 		journalEntity.setDate(journalRequest.getDate());
 		journalEntity.setTitle(journalRequest.getTitle());
 		journalEntity.setJournal(journalRequest.getJournal());
+		journalEntity.setStar(journalRequest.getStar());
 		journalRepo.save(journalEntity);
 		return true;
 	}
